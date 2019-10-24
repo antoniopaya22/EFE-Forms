@@ -1,32 +1,35 @@
 {
-  "name": "efe-forms",
-  "version": "1.0.0",
-  "description": "EFE-Forms by Cotarelo & Payá",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/antonioalfa22/EFE-Forms.git"
-  },
-  "keywords": [
-    "EFE-Forms",
-    "Node",
-    "Hapi"
-  ],
-  "author": "Cotarelo & Payá",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/antonioalfa22/EFE-Forms/issues"
-  },
-  "homepage": "https://github.com/antonioalfa22/EFE-Forms#readme",
-  "dependencies": {
-    "@hapi/cookie": "^10.1.2",
-    "@hapi/hapi": "^18.4.0",
-    "@hapi/inert": "^5.2.2",
-    "@hapi/vision": "^5.5.4",
-    "handlebars": "^4.4.5",
-    "mongo": "^0.1.0"
-  }
+    "name": "efe-forms",
+    "version": "1.0.0",
+    "description": "EFE-Forms by Cotarelo & Payá",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/antonioalfa22/EFE-Forms.git"
+    },
+    "keywords": [
+        "EFE-Forms",
+        "Node",
+        "Hapi"
+    ],
+    "author": "Cotarelo & Payá",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/antonioalfa22/EFE-Forms/issues"
+    },
+    "homepage": "https://github.com/antonioalfa22/EFE-Forms#readme",
+    "dependencies": {
+        "@hapi/cookie": "^10.1.2",
+        "@hapi/hapi": "^18.4.0",
+        "@hapi/inert": "^5.2.2",
+        "@hapi/vision": "^5.5.4",
+        "handlebars": "^4.4.5",
+        "mongo": "^0.1.0",
+        "nodemon": "^1.19.4"
+    }
 }

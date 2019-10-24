@@ -5,14 +5,13 @@ module.exports = {
         repositorio = server.methods.getUserRepository();
 
         server.route([
-
             // ================== LOGOUT =======================
             {
                 method: 'GET',
                 path: '/logout',
                 handler: async(req, h) => {
                     req.cookieAuth.set({ usuario: "", secreto: "" });
-                    return h.view('login', {}, { layout: 'base' });
+                    return h.view('users/login', {}, { layout: 'base' });
                 }
             },
             // =================== LOGIN ===========================
@@ -20,7 +19,7 @@ module.exports = {
                 method: 'GET',
                 path: '/login',
                 handler: async(req, h) => {
-                    return h.view('login', {}, { layout: 'base' });
+                    return h.view('users/login', {}, { layout: 'base' });
                 }
             },
             {
@@ -60,7 +59,7 @@ module.exports = {
                 method: 'GET',
                 path: '/register',
                 handler: async(req, h) => {
-                    return h.view('register', {}, { layout: 'base' });
+                    return h.view('users/register', {}, { layout: 'base' });
                 }
             },
             {
