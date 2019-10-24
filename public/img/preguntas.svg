@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="164px" height="72px" viewBox="0 0 164 72" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="How-it-works/Suggest-options" transform="translate(-69.000000, 0.000000)">
+            <g id="Suggest" transform="translate(0.000000, 0.319502)">
+                <g id="Suggest-illustration" transform="translate(69.000000, 0.000000)">
+                    <g id="Group-21" transform="translate(0.000000, 9.088890)">
+                        <g id="Group-20">
+                            <rect id="Combined-Shape" fill="#FFFFFF" x="0" y="0.757407516" width="53.2394366" height="53.0185261" rx="3"></rect>
+                            <polygon id="Rectangle-606" fill="#CBD2D7" points="20.5187549 31.6848811 32.1642703 44.9395126 8.87323944 44.9395126"></polygon>
+                            <polygon id="Rectangle-606" fill="#CBD2D7" points="39.4859155 25.2458834 56.7887324 44.9395126 22.1830986 44.9395126"></polygon>
+                        </g>
+                        <g id="Group-16" transform="translate(110.535211, 0.000000)">
+                            <rect id="Rectangle-600-Copy-3" fill="#FFFFFF" x="0" y="-2.27373675e-13" width="53.2394366" height="53.0185261" rx="3"></rect>
+                            <g id="Group-15" transform="translate(10.140845, 13.128397)" fill="#CBD2D7">
+                                <g id="Group-14" transform="translate(0.000000, 0.757408)">
+                                    <ellipse id="Oval-81" cx="1.77464789" cy="1.7672842" rx="1.77464789" ry="1.7672842"></ellipse>
+                                    <rect id="Rectangle-609" x="7.98591549" y="0.883642102" width="26.6197183" height="1.7672842"></rect>
+                                </g>
+                                <g id="Group-14" transform="translate(0.000000, 22.469756)">
+                                    <ellipse id="Oval-81" cx="1.77464789" cy="1.7672842" rx="1.77464789" ry="1.7672842"></ellipse>
+                                    <rect id="Rectangle-609" x="7.98591549" y="0.883642102" width="26.6197183" height="1.7672842"></rect>
+                                </g>
+                                <g id="Group-14" transform="translate(0.000000, 11.613582)">
+                                    <ellipse id="Oval-81" cx="1.77464789" cy="1.7672842" rx="1.77464789" ry="1.7672842"></ellipse>
+                                    <rect id="Rectangle-609" x="7.98591549" y="0.883642102" width="26.6197183" height="1.7672842"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <rect id="Combined-Shape" fill="#FFC3B6" x="46.6478873" y="12.9460581" width="70.9859155" height="58.2502484"></rect>
+                    <rect id="Combined-Shape" fill="#FF876D" x="46.6478873" y="0" width="70.9859155" height="18.1777804" rx="4"></rect>
+                    <g id="Group-17" transform="translate(57.000000, 28.879668)" fill="#FF876D">
+                        <rect id="Combined-Shape" x="39.8450704" y="0.406755888" width="10.1408451" height="10.0987669"></rect>
+                        <rect id="Combined-Shape" x="20.0704225" y="0.406755888" width="10.1408451" height="10.0987669"></rect>
+                        <rect id="Combined-Shape" x="20.0704225" y="20.6042896" width="10.1408451" height="10.0987669"></rect>
+                        <rect id="Combined-Shape" x="0.802816901" y="20.6042896" width="10.1408451" height="10.0987669"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

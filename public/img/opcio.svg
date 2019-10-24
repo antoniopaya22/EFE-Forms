@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="166px" height="73px" viewBox="0 0 166 73" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="How-it-works/Select-the-best-option" transform="translate(-68.000000, 0.000000)">
+            <g id="Select" transform="translate(0.000000, 0.319502)">
+                <g id="How-it-works-illustration" transform="translate(68.000000, 0.000000)">
+                    <g id="Group-13" transform="translate(0.000000, 9.218731)">
+                        <rect id="Rectangle-179" fill="#FFFFFF" x="0" y="0" width="54" height="53.7759336" rx="3"></rect>
+                        <polygon id="star" fill="#CBD2D7" points="27 32.6294087 20.296875 36.6919087 22.0742188 29.0747212 16.1835938 23.945815 23.953125 23.2856587 27 16.1255025 30.046875 23.2856587 37.8164062 23.945815 31.9257812 29.0747212 33.703125 36.6919087"></polygon>
+                        <rect id="Rectangle-179" fill="#FFFFFF" x="112" y="0" width="54" height="53.7759336" rx="3"></rect>
+                        <polygon id="star" fill="#CBD2D7" points="139 32.6294087 132.296875 36.6919087 134.074219 29.0747212 128.183594 23.945815 135.953125 23.2856587 139 16.1255025 142.046875 23.2856587 149.816406 23.945815 143.925781 29.0747212 145.703125 36.6919087"></polygon>
+                    </g>
+                    <g id="Group-18" transform="translate(47.314286, 0.000000)">
+                        <rect id="Rectangle-179" fill="#FFE69C" x="0" y="0" width="72" height="71.7012448" rx="3"></rect>
+                        <polygon id="star" fill="#FFC107" points="36 44.1145525 25.6875 50.3645525 28.421875 38.6458025 19.359375 30.7551775 31.3125 29.7395525 36 18.7239275 40.6875 29.7395525 52.640625 30.7551775 43.578125 38.6458025 46.3125 50.3645525"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

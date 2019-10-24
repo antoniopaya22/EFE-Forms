@@ -6,6 +6,24 @@ module.exports = {
 
         server.route([
 
+            // ================== Home Page =======================
+            {
+                method: 'GET',
+                path: '/',
+                handler: async(req, h) => {
+                    return h.view('home', {}, { layout: 'base' });
+                }
+            },
+
+            // ================== Error Page =======================
+            {
+                method: 'GET',
+                path: '/error',
+                handler: async(req, h) => {
+                    return h.view('error', {}, { layout: 'base' });
+                }
+            },
+
             // ================== Recursos estáticos =======================
             {
                 method: 'GET',
@@ -15,7 +33,7 @@ module.exports = {
                         path: './public'
                     }
                 }
-            },
+            }
         ])
     }
 }
