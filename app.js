@@ -1,18 +1,19 @@
-// Módulos
+// MÓDULOS
 const Hapi = require('@hapi/hapi');
 const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
 const Cookie = require('@hapi/cookie');
-const routes = require("./routes.js");
+const userRoutes = require("./routes/userRoutes.js");
+const mainRoutes = require("./routes/mainRoutes.js");
 const userRepository = require("./repositories/userRepository");
 
-// Servidor
+// SERVER
 const server = Hapi.server({
     port: 8080,
     host: 'localhost',
 });
 
-// declarar metodos comunes  
+// METODOS COMUNES  
 server.method({
     name: 'getUserRepository',
     method: () => {
@@ -22,6 +23,7 @@ server.method({
 });
 
 
+// INICIAR SERVER
 const iniciarServer = async() => {
     try {
         // Registrar el Inter antes de usar directory en routes
@@ -60,14 +62,15 @@ const iniciarServer = async() => {
 
         const handlebars = require('handlebars');
 
-        await server.register(routes);
+        await server.register(userRoutes);
+        await server.register(mainRoutes);
         await server.views({
             engines: {
                 html: require('handlebars')
             },
             relativeTo: __dirname,
             path: './views',
-            layoutPath: './views/layout',
+            layoutPath: './views/layouts',
             context: {
                 sitioWeb: "wallapep"
             }
