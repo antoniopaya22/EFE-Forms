@@ -1,3 +1,42 @@
 /* 
     CSS - EFE-Forms
  */
+.uk-button-efe {
+    background-color: #f00076;
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+/* Hover + Focus */
+.uk-button-efe:hover,
+.uk-button-efe:focus {
+    background-color: #f08ac4;
+    color: #fff;
+}
+
+.uk-section-efe {
+    background: #f00076;
+}
+
+.efe {
+    color: #f00076;
+}
+
+.efe-contrast{
+    color: white;
+}
+
+.efe-contrast li a {
+    color: white;
+    list-style: none;
+}
+
+.efe-contrast li a::before {
+    content: "\2022";
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
