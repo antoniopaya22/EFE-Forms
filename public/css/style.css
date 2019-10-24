@@ -40,3 +40,14 @@
     margin-left: -1em;
 }
 
+.efe-img{
+    background-color: #151515;
+}
+.efe-img img{
+    opacity: 0.3;
+}
+
+.icons-div-home{
+    width: 100%;
+}
+

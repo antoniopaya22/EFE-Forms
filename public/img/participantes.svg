@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="167px" height="73px" viewBox="0 0 167 73" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="How-it-works/Invite-participants" transform="translate(-67.000000, 0.000000)">
+            <g id="Invite" transform="translate(0.000000, 0.319502)">
+                <g id="Invite-illustration" transform="translate(67.000000, 0.000000)">
+                    <g id="Group-13" transform="translate(0.000000, 8.194428)">
+                        <rect id="Rectangle-179" fill="#FFFFFF" x="0" y="2.04860699" width="54" height="53.7759336" rx="3"></rect>
+                        <g id="Group" transform="translate(16.000000, 17.000000)" stroke="#CBD2D7" stroke-width="3" stroke-dasharray="25">
+                            <polyline id="ifneedbe-check" points="4.6 9.56765626 9.21758625 14.5275524 17.8262182 6.35229152"></polyline>
+                            <path d="M5.75,0.562817833 C5.75,0.562817833 8.45924384e-11,3.37364412 0,10.9838705 C-7.37196942e-11,17.6159718 5.75,21.4049231 5.75,21.4049231" id="bracket-1" stroke-linecap="round"></path>
+                            <path d="M17.25,0.562817833 C17.25,0.562817833 23,3.37364412 23,10.9838705 C23,17.6159718 17.25,21.4049231 17.25,21.4049231" id="bracket-2" stroke-linecap="round"></path>
+                        </g>
+                        <rect id="Rectangle-179" fill="#FFFFFF" x="112.114286" y="0" width="54" height="53.7759336" rx="3"></rect>
+                        <path d="M131,35.786814 L148.300744,18.4860699" id="close-2" stroke="#CBD2D7" stroke-width="5" stroke-dasharray="40"></path>
+                        <path d="M131,35.786814 L148.300744,18.4860699" id="close-1" stroke="#CBD2D7" stroke-width="5" stroke-dasharray="40" transform="translate(139.650372, 27.136442) scale(-1, 1) translate(-139.650372, -27.136442) "></path>
+                    </g>
+                    <g id="Group-18" transform="translate(47.314286, 0.000000)">
+                        <rect id="Rectangle-179" fill="#CEE7B2" x="0" y="0" width="72" height="71.7012448" rx="3"></rect>
+                        <polyline id="check" stroke="#82C533" stroke-width="8" points="17.7 32.3323246 30.9567257 46.4747076 55.6714286 23.1642052"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
