@@ -1979,12 +1979,16 @@ select.uk-form-width-xsmall {
   color: #fff;
   border: 1px solid transparent;
 }
+
+
 /* Hover + Focus */
 .uk-button-primary:hover,
 .uk-button-primary:focus {
-  background-color: #0f7ae5;
+  background-color: #f08ac4;
   color: #fff;
 }
+
+
 /* OnClick + Active */
 .uk-button-primary:active,
 .uk-button-primary.uk-active {
@@ -2257,6 +2261,8 @@ select.uk-form-width-xsmall {
 .uk-section-primary {
   background: #1e87f0;
 }
+
+
 /*
  * Secondary
  */
@@ -3021,7 +3027,7 @@ select.uk-form-width-xsmall {
  * Primary
  */
 .uk-card-primary {
-  background: #1e87f0;
+  background: #f00076;
   color: #fff;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
@@ -3029,7 +3035,7 @@ select.uk-form-width-xsmall {
   color: #fff;
 }
 .uk-card-primary.uk-card-hover:hover {
-  background-color: #1e87f0;
+  background-color: #f00076;
   box-shadow: 0 14px 25px rgba(0, 0, 0, 0.16);
 }
 /*
@@ -3309,7 +3315,7 @@ select.uk-form-width-xsmall {
  */
 .uk-alert-primary {
   background: #d8eafc;
-  color: #1e87f0;
+  color: #f00076;
 }
 /*
  * Success

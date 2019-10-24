@@ -1975,16 +1975,17 @@ select.uk-form-width-xsmall {
  * Primary
  */
 .uk-button-primary {
-  background-color: #1e87f0;
+  background-color: #f00076;
   color: #fff;
   border: 1px solid transparent;
 }
 /* Hover + Focus */
 .uk-button-primary:hover,
 .uk-button-primary:focus {
-  background-color: #0f7ae5;
+  background-color: #f08ac4;
   color: #fff;
 }
+
 /* OnClick + Active */
 .uk-button-primary:active,
 .uk-button-primary.uk-active {
