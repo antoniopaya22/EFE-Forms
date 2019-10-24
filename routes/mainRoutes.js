@@ -15,6 +15,15 @@ module.exports = {
                 }
             },
 
+            // ================== Error Page =======================
+            {
+                method: 'GET',
+                path: '/error',
+                handler: async(req, h) => {
+                    return h.view('error', {}, { layout: 'base' });
+                }
+            },
+
             // ================== Recursos estáticos =======================
             {
                 method: 'GET',

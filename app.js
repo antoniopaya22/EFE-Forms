@@ -6,6 +6,7 @@ const Cookie = require('@hapi/cookie');
 const userRoutes = require("./routes/userRoutes.js");
 const mainRoutes = require("./routes/mainRoutes.js");
 const userRepository = require("./repositories/userRepository");
+const Error = require('hapi-error');
 
 
 // SERVER
@@ -65,6 +66,7 @@ const iniciarServer = async() => {
 
         await server.register(userRoutes);
         await server.register(mainRoutes);
+        await server.register(Error);
         await server.views({
             engines: {
                 html: require('handlebars')
