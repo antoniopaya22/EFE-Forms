@@ -18,7 +18,7 @@
                                         <div class="uk-inline uk-width-1-1">
                                             <span class="uk-form-icon" uk-icon="icon: user"></span>
                                             <input id="username" class="uk-input" name="user" placeholder="Usuario..."
-                                                type="text" onkeyup="validForm()">
+                                                type="text">
                                         </div>
                                     </div>
                                     <div class="uk-margin ">
@@ -38,7 +38,7 @@
                                     <div class="uk-margin">
                                         <div class="uk-form-controls">
                                             <a id="submitt-button" type="submit" href="/register"
-                                                class="uk-button uk-button-efe uk-width-1-1 uk-margin-small-bottom">
+                                                class="uk-button uk-button-efe-contrast uk-width-1-1 uk-margin-small-bottom">
                                                 Crear cuenta
                                             </a>
                                         </div>
@@ -55,7 +55,6 @@
 
 <script>
     function validForm() {
-        console.log("lol")
         var valid = true;
         var username = document.getElementById("username").value;
         if (!validateNonEmpty('username', username)) valid = false;
