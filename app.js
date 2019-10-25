@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes.js");
 const formRoutes = require("./routes/formRoutes.js");
 const mainRoutes = require("./routes/mainRoutes.js");
 const userRepository = require("./repositories/userRepository");
+const formRepository = require("./repositories/formRepository");
 const Error = require('hapi-error');
 
 
@@ -25,6 +26,13 @@ server.method({
     options: {}
 });
 
+server.method({
+    name: 'getFormRepository',
+    method: () => {
+        return formRepository;
+    },
+    options: {}
+});
 
 // INICIAR SERVER
 const iniciarServer = async() => {
