@@ -11,36 +11,46 @@
                         </div>
                         <div>
                             <div class="uk-card-body">
-                                <h3 class="uk-card-title uk-text-bold uk-text-uppercase efe">Inicia sesión</h3>
-                                <form method="post" action="/login" onsubmit="return(validForm());">
-
+                                <h3 class="uk-card-title uk-text-bold uk-text-uppercase efe">Regístrate</h3>
+                                <form method="post" action="/register" onsubmit = "return(validForm());">
+                                   
                                     <div class="uk-margin">
+                                        <small id="wrongusername" class="input-error-right">Campo requerido</small>
                                         <div class="uk-inline uk-width-1-1">
                                             <span class="uk-form-icon" uk-icon="icon: user"></span>
                                             <input id="username" class="uk-input" name="user" placeholder="Usuario..."
-                                                type="text" onkeyup="validForm()">
+                                                type="text">
                                         </div>
                                     </div>
                                     <div class="uk-margin ">
+                                        <small id="wrongpasswd1" class="input-error-right">Campo requerido</small>
                                         <div class="uk-inline uk-width-1-1">
                                             <span class="uk-form-icon" uk-icon="icon: lock"></span>
                                             <input id="passwd1" class="uk-input" type="password" name="password"
-                                                placeholder="Password...">
+                                                placeholder="Password..." onkeyup="comparePassword()">
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin">
+                                        <small id="wrongpasswd2" class="input-error-right">Campo requerido</small>
+                                        <div class="uk-inline uk-width-1-1">
+                                            <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                                            <input id="passwd2" class="uk-input" type="password" name="password2"
+                                                placeholder="Vuelve a introducir el password..."
+                                                onkeyup="comparePassword()">
                                         </div>
                                     </div>
 
                                     <div class="uk-margin">
                                         <div class="uk-form-controls">
-                                            <input id="submitt-button" type="submit" value="Iniciar sesión"
-                                                class="uk-button uk-button-efe uk-width-1-1 uk-margin-small-bottom">
+                                            <label><input class="uk-checkbox uk-margin-small-right"
+                                                    type="checkbox"><small>Accept our <a href="#" class="efe">Terms of Service</a>
+                                                    and <a href="#"  class="efe">Privacy Policy</a>.</small></label>
                                         </div>
                                     </div>
                                     <div class="uk-margin">
                                         <div class="uk-form-controls">
-                                            <a id="submitt-button" type="submit" href="/register"
+                                            <input id="submitt-button" type="submit" value="Crear cuenta"
                                                 class="uk-button uk-button-efe uk-width-1-1 uk-margin-small-bottom">
-                                                Crear cuenta
-                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -58,18 +68,33 @@
         console.log("lol")
         var valid = true;
         var username = document.getElementById("username").value;
-        if (!validateNonEmpty('username', username)) valid = false;
+        if(!validateNonEmpty('username', username)) valid = false;
         var pass1 = document.getElementById("passwd1").value;
-        if (!validateNonEmpty('passwd1', pass1)) valid = false;
+        if(!validateNonEmpty('passwd1', pass1))valid = false;
         var pass2 = document.getElementById("passwd2").value;
-        if (!validateNonEmpty('passwd2', pass2)) valid = false;
+        if(!validateNonEmpty('passwd2', pass2))valid = false;
         return valid;
     }
     function validateNonEmpty(field, value) {
         if (value == "") {
+            document.getElementById("wrong" + field).className = "input-error-wrong";
             return false;
         } else {
+            document.getElementById("wrong" + field).className = "input-error-right";
             return true;
         }
     }
-</script>
+    function comparePassword() {
+        var pass1 = document.getElementById("passwd1").value;
+        var pass2 = document.getElementById("passwd2").value;
+        if (pass1 != pass2) {
+            document.getElementById("wrongpasswd2").className = "input-error-wrong";
+            document.getElementById("wrongpasswd2").innerText = "Las contraseñas no coinciden";
+            //document.getElementById("submitt-button").setAttribute("disabled", true);
+        } else {
+            document.getElementById("wrongpasswd2").innerText = "Campo requerido";
+            document.getElementById("wrongpasswd2").className = "input-error-right";
+            //document.getElementById("submitt-button").removeAttribute("disabled");
+        }
+    }
+    </script>
