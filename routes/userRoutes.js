@@ -10,8 +10,8 @@ module.exports = {
                 method: 'GET',
                 path: '/logout',
                 handler: async(req, h) => {
-                    req.cookieAuth.set({ usuario: "", secreto: "" });
-                    return h.view('users/login', {}, { layout: 'base' });
+                    req.cookieAuth.set({ user: "", secreto: "" });
+                    return h.view('users/login', {}, { layout: 'login-base' });
                 }
             },
             // =================== LOGIN ===========================
@@ -19,7 +19,7 @@ module.exports = {
                 method: 'GET',
                 path: '/login',
                 handler: async(req, h) => {
-                    return h.view('users/login', {}, { layout: 'base' });
+                    return h.view('users/login', {}, { layout: 'login-base' });
                 }
             },
             {
@@ -29,29 +29,32 @@ module.exports = {
                     password = require('crypto').createHmac('sha256', 'secreto')
                         .update(req.payload.password).digest('hex');
 
-                    usuarioBuscar = {
-                        usuario: req.payload.usuario,
+                    userBuscar = {
+                        user: req.payload.user,
                         password: password,
                     }
 
                     // await no continuar hasta acabar esto
                     // Da valor a respuesta
                     await repositorio.conexion()
-                        .then((db) => repositorio.obtenerUsuarios(db, usuarioBuscar))
-                        .then((usuarios) => {
+                        .then((db) => repositorio.obtenerUsuarios(db, userBuscar))
+                        .then((users) => {
                             respuesta = "";
-                            if (usuarios == null || usuarios.length == 0) {
-                                respuesta = h.redirect('/login?mensaje="Usuario o password incorrecto"')
+                            redir = "";
+                            if (users == null || users.length == 0) {
+                                respuesta =  "Credenciales incorrectas"
+                                redir = '/login?mensaje='+respuesta;
+
                             } else {
                                 req.cookieAuth.set({
-                                    usuario: usuarios[0].usuario,
+                                    user: users[0].user,
                                     secreto: "secreto"
                                 });
-                                respuesta = h.redirect('/misForms')
-
+                                respuesta = "Identificado correctamente";
+                                redir = '/misForms?mensaje='+respuesta;
                             }
                         })
-                    return respuesta;
+                    return h.redirect(redir);
                 }
             },
             // ============== REGISTER ====================
@@ -59,7 +62,7 @@ module.exports = {
                 method: 'GET',
                 path: '/register',
                 handler: async(req, h) => {
-                    return h.view('users/register', {}, { layout: 'base' });
+                    return h.view('users/register', {}, { layout: 'login-base' });
                 }
             },
             {
@@ -68,22 +71,28 @@ module.exports = {
                 handler: async(req, h) => {
                     password = require('crypto').createHmac('sha256', 'secreto')
                         .update(req.payload.password).digest('hex');
+                    password2 = require('crypto').createHmac('sha256', 'secreto')
+                        .update(req.payload.password2).digest('hex');
+                    
+                    if(password != password2){
+                        return;
+                    }
 
-                    usuario = {
-                        usuario: req.payload.usuario,
+                    user = {
+                        user: req.payload.user,
                         password: password,
                     }
 
                     // await no continuar hasta acabar esto
                     // Da valor a respuesta
                     await repositorio.conexion()
-                        .then((db) => repositorio.insertarUsuario(db, usuario))
+                        .then((db) => repositorio.insertarUsuario(db, user))
                         .then((id) => {
                             respuesta = "";
                             if (id == null) {
                                 respuesta = h.redirect('/register?mensaje="Error al crear cuenta"')
                             } else {
-                                respuesta = h.redirect('/login?mensaje="Usuario Creado"')
+                                respuesta = h.redirect('/login')
                                 idAnuncio = id;
                             }
                         })

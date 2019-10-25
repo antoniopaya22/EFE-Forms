@@ -19,7 +19,7 @@
 }
 
 .efe {
-    color: #f00076;
+    color: #f00076 !important;
 }
 
 .efe-contrast{
@@ -51,3 +51,9 @@
     width: 100%;
 }
 
+.input-error-wrong{
+    color:#B32A0C;
+}
+.input-error-right{
+    display: none;
+}

@@ -8,7 +8,7 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  * 3. Style
  */
-html {
+ html {
   /* 1 */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 16px;
@@ -1979,16 +1979,12 @@ select.uk-form-width-xsmall {
   color: #fff;
   border: 1px solid transparent;
 }
-
-
 /* Hover + Focus */
 .uk-button-primary:hover,
 .uk-button-primary:focus {
-  background-color: #f08ac4;
+  background-color: #0f7ae5;
   color: #fff;
 }
-
-
 /* OnClick + Active */
 .uk-button-primary:active,
 .uk-button-primary.uk-active {
@@ -2261,8 +2257,6 @@ select.uk-form-width-xsmall {
 .uk-section-primary {
   background: #1e87f0;
 }
-
-
 /*
  * Secondary
  */
@@ -3027,7 +3021,7 @@ select.uk-form-width-xsmall {
  * Primary
  */
 .uk-card-primary {
-  background: #f00076;
+  background: #1e87f0;
   color: #fff;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
@@ -3035,7 +3029,7 @@ select.uk-form-width-xsmall {
   color: #fff;
 }
 .uk-card-primary.uk-card-hover:hover {
-  background-color: #f00076;
+  background-color: #1e87f0;
   box-shadow: 0 14px 25px rgba(0, 0, 0, 0.16);
 }
 /*
@@ -3315,7 +3309,7 @@ select.uk-form-width-xsmall {
  */
 .uk-alert-primary {
   background: #d8eafc;
-  color: #f00076;
+  color: #1e87f0;
 }
 /*
  * Success

@@ -4,6 +4,7 @@ const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
 const Cookie = require('@hapi/cookie');
 const userRoutes = require("./routes/userRoutes.js");
+const formRoutes = require("./routes/formRoutes.js");
 const mainRoutes = require("./routes/mainRoutes.js");
 const userRepository = require("./repositories/userRepository");
 const Error = require('hapi-error');
@@ -44,13 +45,13 @@ const iniciarServer = async() => {
             validateFunc: function(request, cookie) {
                 promise = new Promise((resolve, reject) => {
 
-                    usuarioCriterio = { "usuario": cookie.usuario };
-                    if (cookie.usuario != null && cookie.usuario != "" &&
+                    usuarioCriterio = { "user": cookie.user };
+                    if (cookie.user != null && cookie.user != "" &&
                         cookie.secreto == "secreto") {
 
                         resolve({
                             valid: true,
-                            credentials: cookie.usuario
+                            credentials: cookie.user
                         });
 
                     } else {
@@ -65,12 +66,13 @@ const iniciarServer = async() => {
         const handlebars = require('handlebars');
 
         await server.register(userRoutes);
+        await server.register(formRoutes);
         await server.register(mainRoutes);
         await server.register(Error);
         await server.views({
             engines: {
                 html: require('handlebars')
-            },
+            },  
             relativeTo: __dirname,
             path: './views',
             layoutPath: './views/layouts',
