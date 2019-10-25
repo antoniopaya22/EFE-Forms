@@ -30,7 +30,7 @@ module.exports = {
 
         return promise;
     },
-    getForms: async (db, pg, criterio) => {
+    getFormsPg: async (db, pg, criterio) => {
         promise = new Promise((resolve, reject) => {
             var collection = db.collection('forms');
             collection.count( criterio, (err, count) => {
@@ -49,5 +49,21 @@ module.exports = {
         });
 
         return promise;
-    }
+    },
+    getForms: async (db, criterio) => {
+        promise = new Promise((resolve, reject) => {
+            var collection = db.collection('forms');
+            collection.find(criterio).toArray( (err, result) => {
+                if (err) {
+                    resolve(null);
+                } else {
+                    // lista de anuncios
+                    resolve(result);
+                }
+                db.close();
+            });
+        });
+
+        return promise;
+    },
 }

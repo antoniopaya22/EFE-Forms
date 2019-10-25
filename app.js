@@ -38,6 +38,16 @@ var handlebars = require('handlebars');
 handlebars.registerHelper("sumar", (a, b) => {
     return a + b;
 })
+var handlebars = require('handlebars');
+handlebars.registerHelper("select", (a, b) => {
+    if(a == b) return "selected";
+    return "";
+})
+var handlebars = require('handlebars');
+handlebars.registerHelper("check", (a) => {
+    if(a) return "checked";
+    return "";
+})
 
 // INICIAR SERVER
 const iniciarServer = async() => {

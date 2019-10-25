@@ -67,7 +67,7 @@ module.exports = {
                     var criterio = { "propietario": req.auth.credentials };
 
                     await repositorioForm.conexion()
-                    .then((db) => repositorioForm.getForms(db, pg, criterio))
+                    .then((db) => repositorioForm.getFormsPg(db, pg, criterio))
                     .then((forms, total) => {
                         formsEjemplo = forms;
                         
@@ -109,6 +109,86 @@ module.exports = {
                             hasNext: next
                         },
                         { layout: 'base' });
+                }
+            },
+            // ================== Editar forms =======================
+            {
+                method: 'POST',
+                path: '/form/{id}/edit',
+                options : {
+                    auth: 'auth-registrado',
+                    payload: {
+                        output: 'stream'
+                    }
+                },
+                handler: async (req, h) => {
+
+                    // criterio de anucio a modificar
+                    var criterio = { "_id" : require("mongodb").ObjectID(req.params.id),
+                        "usuario": req.auth.credentials
+                    };
+
+                    // nuevos valores para los atributos
+                    anuncio = {
+                        usuario: req.auth.credentials ,
+                        titulo: req.payload.titulo,
+                        descripcion: req.payload.descripcion,
+                        categoria: req.payload.categoria,
+                        precio: Number.parseFloat(req.payload.precio),
+                    }
+
+                    // await no continuar hasta acabar esto
+                    // Da valor a respuesta
+                    await repositorio.conexion()
+                        .then((db) => repositorio.modificarAnuncio(db,criterio,anuncio))
+                        .then((id) => {
+                            respuesta = "";
+                            if (id == null) {
+                                respuesta =  "Error al modificar"
+                            } else {
+                                respuesta = "Modificado ";
+                            }
+                        })
+
+                    // ¿nos han enviado foto nueva?
+                    if ( req.payload.foto.filename != "") {
+                        binario = req.payload.foto._data;
+                        extension = req.payload.foto.hapi.filename.split('.')[1];
+
+                        await module.exports.utilSubirFichero(
+                            binario, req.params.id, extension);
+                    }
+
+                    return h.redirect('/misanuncios?mensaje='+respuesta)
+                }
+            },
+            {
+                method: 'GET',
+                path: '/form/{id}/edit',
+                options: {
+                    auth: 'auth-registrado'
+                },
+                handler: async (req, h) => {
+
+                    var criterio = { "_id" : require("mongodb").ObjectID(req.params.id),
+                        "propietario": req.auth.credentials
+                    };
+                    
+                    await repositorioForm.conexion()
+                    .then((db) => repositorioForm.getForms(db, criterio))
+                    .then((forms) => {
+                        // ¿Solo una coincidencia por _id?
+                            formEdit = forms[0];
+                        })
+                    var tags = "";
+                    for(var i = 0; i<formEdit.tags.length;i++){
+                        tags += formEdit.tags[i]+"; ";
+                    }
+                    formEdit.tags = tags;
+
+                    return h.view('forms/editForm',
+                        { form: formEdit},
+                        { layout: 'base'} );
                 }
             }
 
