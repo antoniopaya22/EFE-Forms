@@ -16,6 +16,15 @@ module.exports = {
                     }
                 }
             },
+            {
+                method: 'GET',
+                path: '/',
+                handler: async (req, h) => {
+                    return h.view('index',
+                        { },
+                        { layout: 'base'});
+                }
+            }
         ])
     }
 }
