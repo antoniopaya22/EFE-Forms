@@ -2,9 +2,55 @@ module.exports = {
     name: 'FormRouter',
     register: async (server, options) => {
         miserver = server;
-       // repositorio = server.methods.getFormRepository();
-
+        repositorioForm = server.methods.getFormRepository();
         server.route([
+
+            // ================== Add Form =======================
+            {
+                method: 'GET',
+                path: '/addForm',
+                handler: async(req, h) => {
+                    return h.view('forms/addForm', {}, { layout: 'base' });
+                }
+            },
+            {
+                method: 'POST',
+                path: '/addForm',
+                handler: async(req, h) => {
+                    var numPreguntas = Object.keys(req.payload).filter(x => x.includes('obligatoria')).length;
+                    var preguntas = [];
+                    for (let i = 0; i < numPreguntas; i++) {
+                        preguntas.push({
+                            pregunta: req.payload[`titulo${i+1}`],
+                            tipo: req.payload[`tipo${i+1}`],
+                            requerida: req.payload[`obligatoria${i+1}`] == 'on' ? true : false
+                        });
+                    }
+                    var form = {
+                        titulo: req.payload.titulo,
+                        descripcion: req.payload.descripcion,
+                        propietario: 'antonio-por-defecto',
+                        publico: req.payload.publico == 'Público' ? true : false,
+                        tags: req.payload.tags.split(';'),
+                        preguntas: preguntas
+                    };
+
+                    await repositorioForm.conexion()
+                        .then((db) => {
+                            repositorioForm.addForm(db, form)
+                        })
+                        .then((id) => {
+                            respuesta = "";
+                            if (id == null) {
+                                respuesta = h.redirect('/?mensaje="Error al insertar"')
+                            } else {
+                                respuesta = h.redirect('/?mensaje="Formulario creado"')
+                            }
+                        });
+                    return respuesta;
+                }
+            },
+            // ================== Mis Forms =======================
             {
                 method: 'GET',
                 path: '/misForms',
