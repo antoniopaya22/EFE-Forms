@@ -22,7 +22,7 @@
     <link href="/css/style.css" rel="stylesheet" media="screen">
 
 </head>
-
+<body>
 <!-- NOTIFICACION -->
 {{#if mensaje}}
 <script>
@@ -40,7 +40,6 @@
         if (tipoMensaje =="") {
             tipoMensaje = 'primary';
         }
-        console.log(UIkit)
         UIkit.notification({
             message: mensaje,
             status: tipoMensaje

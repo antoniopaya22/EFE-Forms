@@ -73,10 +73,6 @@ module.exports = {
                         .update(req.payload.password).digest('hex');
                     password2 = require('crypto').createHmac('sha256', 'secreto')
                         .update(req.payload.password2).digest('hex');
-                    
-                    if(password != password2){
-                        return;
-                    }
 
                     user = {
                         user: req.payload.user,
@@ -91,7 +87,9 @@ module.exports = {
                             respuesta = "";
                             if (id == null) {
                                 respuesta = h.redirect('/register?mensaje="Error al crear cuenta"')
-                            } else {
+                            } if(id == "NOT_VALID_USERNAME"){
+                                respuesta = h.redirect('/register?mensaje="Usuario no disponible"')
+                            }else {
                                 respuesta = h.redirect('/login')
                                 idAnuncio = id;
                             }
@@ -101,5 +99,5 @@ module.exports = {
                 }
             }
         ])
-    }
+    } 
 }
