@@ -34,6 +34,11 @@ server.method({
     options: {}
 });
 
+var handlebars = require('handlebars');
+handlebars.registerHelper("sumar", (a, b) => {
+    return a + b;
+})
+
 // INICIAR SERVER
 const iniciarServer = async() => {
     try {

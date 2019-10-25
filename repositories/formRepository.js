@@ -22,11 +22,30 @@ module.exports = {
                 if (err) {
                     resolve(null);
                 } else {
-                    // _id no es un string es un ObjectID
                     resolve(result.ops[0]._id.toString());
                 }
                 db.close();
             });
+        });
+
+        return promise;
+    },
+    getForms: async (db, pg, criterio) => {
+        promise = new Promise((resolve, reject) => {
+            var collection = db.collection('forms');
+            collection.count( criterio, (err, count) => {
+                collection.find(criterio).skip( (pg-1)*2 ).limit( 2 )
+                    .toArray( (err, result) => {
+
+                        if (err) {
+                            resolve(null);
+                        } else {
+                            result.total = count;
+                            resolve(result);
+                        }
+                        db.close();
+                    });
+            })
         });
 
         return promise;

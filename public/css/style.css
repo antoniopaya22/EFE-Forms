@@ -70,6 +70,10 @@
 .efe-form-card{
     background-color: #444444;
 }
+
+.uk-badge{
+    background-color: #444444;
+}
 /* TABLES */
 .table-hover:hover{
     background-color: #ffe3f3 !important;

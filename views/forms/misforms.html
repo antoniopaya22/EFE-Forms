@@ -4,8 +4,9 @@
             <table class="uk-table uk-table-hover uk-table-middle uk-table-divider uk-table-responsive">
                 <thead>
                     <tr>
-                        <th class="uk-table-medium">Título</th>
+                        <th class="uk-table-large">Título</th>
                         <th class="uk-width-large">Descripción</th>
+                        <th class="uk-width-large">Etiquetas</th>
                         <th class="uk-width-small-efe">Opciones</th>
                     </tr>
                 </thead>
@@ -14,12 +15,18 @@
                     <tr class="table-hover">
                         <td><strong>{{ titulo }}</strong></td>
                         <td>{{ descripcion }}</td>
+                        <td>{{#each tags}}
+                            <span class="uk-badge">{{ this }}</span>
+                            {{/each}}
+                        </td>
                         <td>
                             <div class="group-bt-margin" width="100%" uk-grid>
-                                <a class="uk-link bt-table bt-table-upd uk-width-1-2 uk-grid-margin" href="/form/{{_id}}/modificar">
+                                <a class="uk-link bt-table bt-table-upd uk-width-1-2 uk-grid-margin"
+                                    href="/form/{{_id}}/modificar">
                                     <span uk-icon="pencil"></span>
                                 </a> <br>
-                                <a class="uk-link bt-table bt-table-del uk-width-1-2 uk-grid-margin" href="/form/{{_id}}/eliminar">
+                                <a class="uk-link bt-table bt-table-del uk-width-1-2 uk-grid-margin"
+                                    href="/form/{{_id}}/eliminar">
                                     <span uk-icon="trash"></span>
                                 </a>
                             </div>
@@ -32,13 +39,15 @@
         </div>
 
         <ul class="uk-pagination uk-flex-center" uk-margin>
+            {{#if hasPrevious }}<li><a href="/misForms?pg={{ sumar current -1}}"><span uk-pagination-previous></span></a></li>{{/if}}
             {{#each paginas}}
 
             <li class="{{ clase }}">
-                <a href="/misanuncios?pg={{ valor }}">{{ valor }}</a>
+                <a href="/misForms?pg={{ valor }}">{{ valor }}</a>
             </li>
 
             {{/each}}
+            {{#if hasNext }}<li><a href="/misForms?pg={{ sumar current 1}}"><span uk-pagination-next></span></a></li>{{/if}}
         </ul>
 
     </div>

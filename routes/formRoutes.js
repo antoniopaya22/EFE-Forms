@@ -29,7 +29,7 @@ module.exports = {
                     var form = {
                         titulo: req.payload.titulo,
                         descripcion: req.payload.descripcion,
-                        propietario: 'antonio-por-defecto',
+                        propietario: req.state["session-id"].user,
                         publico: req.payload.publico == 'Público' ? true : false,
                         tags: req.payload.tags.split(';'),
                         preguntas: preguntas
@@ -42,9 +42,9 @@ module.exports = {
                         .then((id) => {
                             respuesta = "";
                             if (id === null) {
-                                respuesta = h.redirect('/?mensaje="Error al insertar"')
+                                respuesta = h.redirect('/misForms?mensaje="Error al insertar"')
                             } else {
-                                respuesta = h.redirect('/?mensaje="Formulario creado"')
+                                respuesta = h.redirect('/misForms?mensaje="Formulario creado"')
                             }
                         });
                     return respuesta;
@@ -59,57 +59,56 @@ module.exports = {
                 },
                 handler: async (req, h) => {
 
-                    var pg = parseInt(req.query.pg); // Es String !!!
-                    if (req.query.pg == null) { // Puede no venir el param
+                    var pg = parseInt(req.query.pg);
+                    if (req.query.pg == null) { 
                         pg = 1;
                     }
 
-                    var criterio = { "user": req.auth.credentials };
-                    // cookieAuth
+                    var criterio = { "propietario": req.auth.credentials };
 
-                    await repositorio.conexion()
-                        .then((db) => repositorio.obtenerFormsPg(db, pg, criterio))
-                        .then((forms, total) => {
-                            formsEjemplo = forms;
-
-                            pgUltima = forms.total / 2;
-                            // La págian 2.5 no existe
-                            // Si excede sumar 1 y quitar los decimales
-                            if (pgUltima % 2 > 0) {
-                                pgUltima = Math.trunc(pgUltima);
-                                pgUltima = pgUltima + 1;
-                            }
-
-                        })
-                        var paginas = [];
-                        for (i = 1; i <= pgUltima; i++) {
-                            if (i == pg) {
-                                paginas.push({ valor: i, clase: "uk-active" });
-                            } else {
-                                paginas.push({ valor: i });
-                            }
+                    await repositorioForm.conexion()
+                    .then((db) => repositorioForm.getForms(db, pg, criterio))
+                    .then((forms, total) => {
+                        formsEjemplo = forms;
+                        
+                        pgUltima = formsEjemplo.total / 2;
+                        if (pgUltima % 2 > 0) {
+                            pgUltima = Math.trunc(pgUltima);
+                            pgUltima = pgUltima + 1;
                         }
                         
+                    })
+                    var paginas = [];
+                    var previous = true;
+                    var next = true;
+                    var start =  pg-1;
+                    if(start < 1){
+                        start = 1;
+                        previous = false;
 
-                        formsEjemplo = [
-                            {
-                                titulo: "form 1",
-                                descripcion: "descripcion de form 1"
-                            },
-                            {
-                                titulo: "form 2",
-                                descripcion: "descripcion de form 2"
-                            }
-                        ]
-                 
+                    }
+                    var finish = pg+1;
+                    if(finish > pgUltima){
+                        finish = pgUltima;
+                        next = false;
+                    }
+                    for (i = start; i <= finish; i++) {
+                        if (i == pg) {
+                            paginas.push({ valor: i, clase: "uk-active" });
+                        } else {
+                            paginas.push({ valor: i });
+                        }
+                    }   
                     return h.view('forms/misforms',
                         {
-                            forms: forms,
-                            usuarioAutenticado: req.state["session-id"].user
-                            //paginas: paginas
+                            forms: formsEjemplo,
+                            usuarioAutenticado: req.state["session-id"].user,
+                            paginas: paginas,
+                            current: pg,
+                            hasPrevious: previous,
+                            hasNext: next
                         },
                         { layout: 'base' });
-                        //return h.view('misforms', {}, { layout: 'base' });
                 }
             }
 
