@@ -41,7 +41,7 @@ module.exports = {
                         })
                         .then((id) => {
                             respuesta = "";
-                            if (id == null) {
+                            if (id === null) {
                                 respuesta = h.redirect('/?mensaje="Error al insertar"')
                             } else {
                                 respuesta = h.redirect('/?mensaje="Formulario creado"')
