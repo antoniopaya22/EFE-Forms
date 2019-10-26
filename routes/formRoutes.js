@@ -28,25 +28,25 @@ module.exports = {
                         respuesta: x
                     }));
                     user_respuesta = "";
-                    if(req.state["session-id"]){
+                    if (req.state["session-id"]) {
                         user_respuesta = req.state["session-id"].user;
-                    }else{
+                    } else {
                         user_respuesta = "anonimo"; // esto lo dejamos "anónimo" o undefined? eso lo puedes cambiar si necesitas comprobar algo con un if en la vista
                     }
                     var respuesta = {
                         formid: req.params.id,
-                        autor: user, 
+                        autor: user,
                         preguntas: preguntas
                     };
                     //////////////////////////// publico privado
                     var resp = "";
                     await repositorioRespuesta.conexion()
-                        .then((db) => repositorioRespuesta.addRespuesta(db,respuesta))
+                        .then((db) => repositorioRespuesta.addRespuesta(db, respuesta))
                         .then((id) => {
                             if (id === null) {
                                 resp = h.redirect('/?mensaje=Error');
                             } else {
-                                resp =  h.redirect('/?mensaje=Respuesta->enviada');
+                                resp = h.redirect('/?mensaje=Respuesta->enviada');
                             }
                         });
                     return resp;
@@ -55,7 +55,7 @@ module.exports = {
             {
                 method: 'GET',
                 path: '/form/{id}/addRespuesta',
-              
+
                 handler: async (req, h) => {
 
                     var criterio = {
@@ -69,20 +69,20 @@ module.exports = {
                             formEdit = forms[0];
                         });
                     user = undefined;
-                    if(req.state["session-id"]){
+                    if (req.state["session-id"]) {
                         user = req.state["session-id"].user;
                     }
-                    if(formEdit.publico || (!formEdit.publico && user)){
+                    if (formEdit.publico || (!formEdit.publico && user)) {
                         return h.view('forms/addRespuesta',
-                        { form: formEdit, usuarioAutenticado: user },
-                        { layout: 'base' });
-                    }else{
+                            { form: formEdit, usuarioAutenticado: user },
+                            { layout: 'base' });
+                    } else {
                         // aqui habra que retornar la vista por defecto, que no se cual ye tovia lol
                         // de momento, retorna a login
                         var message = "Log in para responder"
-                        return h.redirect('/login?mensaje='+message);
+                        return h.redirect('/login?mensaje=' + message);
                     }
-                    
+
                 }
 
             },
@@ -98,16 +98,16 @@ module.exports = {
                         "_id": require("mongodb").ObjectID(req.params.id)
                     };
                     user = undefined;
-                    if(req.state["session-id"]){
+                    if (req.state["session-id"]) {
                         user = req.state["session-id"].user;
                     }
                     respuesta = "";
                     await repositorioForm.conexion()
                         .then((db) => repositorioForm.getForms(db, criterio))
                         .then((forms) => {
-                            if(forms === null){
+                            if (forms === null) {
                                 respuesta = h.redirect('/?mensaje="Error al insertar"');
-                            }else{
+                            } else {
                                 respuesta = h.view('forms/formCreado', {
                                     form: forms[0],
                                     usuarioAutenticado: user
@@ -125,7 +125,7 @@ module.exports = {
                 },
                 handler: async (req, h) => {
                     user = undefined;
-                    if(req.state["session-id"]){
+                    if (req.state["session-id"]) {
                         user = req.state["session-id"].user;
                     }
                     return h.view('forms/addForm', {
@@ -226,6 +226,15 @@ module.exports = {
                             paginas.push({ valor: i });
                         }
                     }
+                    // Recorte
+                    formsEjemplo.forEach((e) => {
+                        if (e.titulo.length > 25) {
+                            e.titulo = e.titulo.substring(0, 25) + "...";
+                        }
+                        if (e.descripcion.length > 80) {
+                            e.descripcion = e.descripcion.substring(0, 80) + "...";;
+                        }
+                    });
                     return h.view('forms/misforms',
                         {
                             forms: formsEjemplo,
@@ -234,7 +243,7 @@ module.exports = {
                             current: pg,
                             hasPrevious: previous,
                             hasNext: next,
-                            empty: formsEjemplo.total == 0 ? true: false,
+                            empty: formsEjemplo.total == 0 ? true : false,
                             hasPrevNext: previous || next
                         },
                         { layout: 'base' });
@@ -321,7 +330,7 @@ module.exports = {
                     }
                     formEdit.tags = tags;
                     user = {};
-                    if(req.state["session-id"]){
+                    if (req.state["session-id"]) {
                         user = req.state["session-id"].user;
                     }
                     return h.view('forms/editForm',
@@ -339,7 +348,8 @@ module.exports = {
                 },
                 handler: async (req, h) => {
 
-                    var criterio = { "_id" :
+                    var criterio = {
+                        "_id":
                             require("mongodb").ObjectID(req.params.id),
                         "propietario": req.auth.credentials
                     };
@@ -352,8 +362,117 @@ module.exports = {
 
                     return h.redirect('/misForms?mensaje="Formulario eliminado"')
                 }
-            }
+            },
+            // ================== Buscar forms =======================
+            {
+                method: 'GET',
+                path: '/explore',
+                handler: async (req, h) => {
 
+                    var pg = parseInt(req.query.pg);
+                    if (req.query.pg == null) {
+                        pg = 1;
+                    }
+
+                    var criterio = {};
+                    var searchBy = "titulo";
+                    if (req.query.criterio != null) {
+                        searchBy = req.query.tipocriterio;
+                        req.state['form-search-filter'] = searchBy;
+                        if (searchBy == "titulo") {
+                            criterio = {
+                                "titulo": {
+                                    $regex: ".*" + req.query.criterio + ".*"
+                                },
+                                "publico": true
+                            }
+                        } else {
+                            var new_tags = req.query.criterio.split(';');
+                            if (new_tags[new_tags.length - 1] == "") {
+                                new_tags.pop();
+                            }
+                            var tag_obj = ".*(";
+                            for(var i = 0; i < new_tags.length; i++){
+                                if(i != new_tags.length-1){
+                                    tag_obj += new_tags[i] + "|";
+                                }else{
+                                    tag_obj += new_tags[i];
+                                }
+                                
+                            }
+                            tag_obj += ").*";
+                            criterio = {
+                                "tags": {
+                                    $elemMatch: { $regex: ".*" + tag_obj + ".*" }
+                                },
+                                "publico": true
+                            }
+                        }
+
+                    } else {
+                        criterio = { "publico": true };
+
+                    }
+
+                    await repositorioForm.conexion()
+                        .then((db) => repositorioForm.getFormsPg(db, pg, criterio))
+                        .then((forms, total) => {
+                            formsEjemplo = forms;
+
+                            pgUltima = formsEjemplo.total / 2;
+                            if (formsEjemplo.total % 2 > 0) {
+                                pgUltima = Math.trunc(pgUltima);
+                                pgUltima = pgUltima + 1;
+                            }
+
+                        });
+                    var paginas = [];
+                    var previous = true;
+                    var next = true;
+                    var start = pg - 1;
+                    if (start < 1) {
+                        start = 1;
+                        previous = false;
+
+                    }
+                    var finish = pg + 1;
+                    if (finish > pgUltima) {
+                        finish = pgUltima;
+                        next = false;
+                    }
+                    for (i = start; i <= finish; i++) {
+                        if (i == pg) {
+                            paginas.push({ valor: i, clase: "uk-active" });
+                        } else {
+                            paginas.push({ valor: i });
+                        }
+                    }
+
+
+                    // Recorte
+                    formsEjemplo.forEach((e) => {
+                        if (e.titulo.length > 25) {
+                            e.titulo = e.titulo.substring(0, 25) + "...";
+                        }
+                        if (e.descripcion.length > 80) {
+                            e.descripcion = e.descripcion.substring(0, 80) + "...";;
+                        }
+                    });
+                    return h.view('forms/explore',
+                        {
+                            forms: formsEjemplo,
+                            usuarioAutenticado: req.state["session-id"].user,
+                            paginas: paginas,
+                            current: pg,
+                            hasPrevious: previous,
+                            hasNext: next,
+                            empty: formsEjemplo.total == 0 ? true : false,
+                            hasPrevNext: previous || next,
+                            filter: searchBy
+                        },
+                        { layout: 'base' });
+                }
+            }
         ])
     }
 };

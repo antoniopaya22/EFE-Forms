@@ -1,6 +1,24 @@
 <section class="uk-section">
     <div class="uk-container">
         <div class="uk-overflow-auto">
+            <div class="uk-overlay uk-overlay-default">
+                <h2 class="uk-margin">Busca tu formulario</h2>
+                <div class="uk-margin">
+                    <form class="uk-search uk-search-default uk-width-1-1" action="/explore">
+                        <div uk-grid>
+                            <div class="uk-width-4-5">
+                                <span uk-search-icon></span>
+                                <input class="uk-search-input" name="criterio" type="search" placeholder="Buscar...">
+                            </div>
+                            <select class="uk-select uk-width-1-5" name="tipocriterio">
+                                <option value="titulo" {{select filter "titulo"}}>Título</option>
+                                <option value="tag" {{select filter "tag"}}>Etiquetas</option>
+                            </select>
+                        </div>
+                    </form>
+                    <small class="small-efe">Lista de etiquetas separadas por ';'</small>
+                </div>
+            </div>
             {{#if empty}}
             <div class="container-empty-list">
                 <a href="/addForm" class="uk-button bt-empty-list uk-border-rounded">
@@ -10,7 +28,7 @@
                         <span>Crear formulario</span>
                     </div>
                 </a>
-                <p>Comienza creando tu primer formulario</p>
+                <p>No hay formularios públicos, comienza creando tu primer formulario</p>
             </div>
 
             {{/if}}
@@ -35,14 +53,10 @@
                         </td>
                         <td>
                             <div class="group-bt-margin" width="100%" uk-grid>
-                                <a class="uk-link bt-table bt-table-upd uk-width-1-2 uk-grid-margin" uk-tooltip="Editar"
-                                    href="/form/{{_id}}/edit">
-                                    <span uk-icon="pencil"></span>
+                                <a class="uk-link bt-table bt-table-res uk-width-1-2 uk-grid-margin" uk-tooltip="Responder preguntas"
+                                    href="/form/{{_id}}/addRespuesta">
+                                    <span uk-icon="comment"></span>
                                 </a> <br>
-                                <a class="uk-link bt-table bt-table-del uk-width-1-2 uk-grid-margin" uk-tooltip="Eliminar"
-                                    href="/form/{{_id}}/delete">
-                                    <span uk-icon="trash"></span>
-                                </a>
                             </div>
                         </td>
 
@@ -55,19 +69,19 @@
 
         <ul class="uk-pagination uk-flex-center" uk-margin>
             {{#if hasPrevious }}
-            <li><a href="/misForms?pg={{ sumar current -1}}"><span uk-pagination-previous></span></a></li>{{/if}}
+            <li><a href="/explore?pg={{ sumar current -1}}"><span uk-pagination-previous></span></a></li>{{/if}}
 
             {{#if hasPrevNext }}
             {{#each paginas}}
             <li class="{{ clase }}">
-                <a href="/misForms?pg={{ valor }}">{{ valor }}</a>
+                <a href="/explore?pg={{ valor }}">{{ valor }}</a>
             </li>
 
             {{/each}}
             {{/if}}
 
             {{#if hasNext }}
-            <li><a href="/misForms?pg={{ sumar current 1}}"><span uk-pagination-next></span></a></li>
+            <li><a href="/explore?pg={{ sumar current 1}}"><span uk-pagination-next></span></a></li>
             {{/if}}
         </ul>
 

@@ -94,6 +94,12 @@
     color: rgb(156, 143, 255);
     border: 2px solid rgb(156, 143, 255);
 }
+.bt-table-res:hover,
+.bt-table-res{
+    color: rgb(109, 181, 94);
+    border: 2px solid rgb(109, 181, 94);
+}
+.bt-table-res:hover,
 .bt-table-upd:hover,
 .bt-table-del:hover{
     background-color: white;
@@ -125,4 +131,9 @@
     background-color: transparent;
     border: 5px dashed #f00076;
     font-size: 1.5em;
+}
+
+
+.small-efe{
+    color: #999;
 }
