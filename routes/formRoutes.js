@@ -3,19 +3,129 @@ module.exports = {
     register: async (server, options) => {
         miserver = server;
         repositorioForm = server.methods.getFormRepository();
+        repositorioRespuesta = server.methods.getRespuestaRepository();
         server.route([
 
+            // ================== Add Respuesta =======================
+            {
+                method: 'POST',
+                path: '/form/{id}/addRespuesta',
+                handler: async (req, h) => {
+                    var criterio = {
+                        "_id": require("mongodb").ObjectID(req.params.id)
+                    };
+                    var respuestas = Object.keys(req.payload).filter(x => x.includes('pre_'));
+                    await repositorioForm.conexion()
+                        .then((db) => repositorioForm.getForms(db, criterio))
+                        .then((forms) => {
+                            form = forms[0];
+                        });
+                    var preguntas = [];
+                    respuestas.forEach(x => preguntas.push({
+                        pregunta: form.preguntas.filter(y => y.pregunta.includes(x.split('pre_')[1]))[0].pregunta,
+                        tipo: form.preguntas.filter(y => y.pregunta.includes(x.split('pre_')[1]))[0].tipo,
+                        requerida: form.preguntas.filter(y => y.pregunta.includes(x.split('pre_')[1]))[0].requerida,
+                        respuesta: x
+                    }));
+                    var respuesta = {
+                        formid: req.params.id,
+                        autor: "asuario-anonimo", //TODO
+                        preguntas: preguntas
+                    };
+                    var resp = "";
+                    await repositorioRespuesta.conexion()
+                        .then((db) => repositorioRespuesta.addRespuesta(db,respuesta))
+                        .then((id) => {
+                            if (id === null) {
+                                resp = h.redirect('/?mensaje=Error');
+                            } else {
+                                resp =  h.redirect('/?mensaje=Respuesta->enviada');
+                            }
+                        });
+                    return resp;
+                }
+            },
+            {
+                method: 'GET',
+                path: '/form/{id}/addRespuesta',
+                options: {
+                    auth: 'auth-registrado'
+                },
+                handler: async (req, h) => {
+
+                    var criterio = {
+                        "_id": require("mongodb").ObjectID(req.params.id),
+                        "propietario": req.auth.credentials
+                    };
+
+                    await repositorioForm.conexion()
+                        .then((db) => repositorioForm.getForms(db, criterio))
+                        .then((forms) => {
+                            formEdit = forms[0];
+                        });
+                    user = {};
+                    if(req.state["session-id"]){
+                        user = req.state["session-id"].user;
+                    }
+                    return h.view('forms/addRespuesta',
+                        { form: formEdit, usuarioAutenticado: user },
+                        { layout: 'base' });
+                }
+
+            },
             // ================== Add Form =======================
             {
                 method: 'GET',
-                path: '/addForm',
+                path: '/formCreado/{id}',
+                options: {
+                    auth: 'auth-registrado'
+                },
                 handler: async (req, h) => {
-                    return h.view('forms/addForm', {}, { layout: 'base' });
+                    var criterio = {
+                        "_id": require("mongodb").ObjectID(req.params.id)
+                    };
+                    user = {};
+                    if(req.state["session-id"]){
+                        user = req.state["session-id"].user;
+                    }
+                    respuesta = "";
+                    await repositorioForm.conexion()
+                        .then((db) => repositorioForm.getForms(db, criterio))
+                        .then((forms) => {
+                            if(forms === null){
+                                respuesta = h.redirect('/?mensaje="Error al insertar"');
+                            }else{
+                                respuesta = h.view('forms/formCreado', {
+                                    form: forms[0],
+                                    usuarioAutenticado: user
+                                }, { layout: 'base' });
+                            }
+                        });
+                    return respuesta;
+                }
+            },
+            {
+                method: 'GET',
+                path: '/addForm',
+                options: {
+                    auth: 'auth-registrado'
+                },
+                handler: async (req, h) => {
+                    user = {};
+                    if(req.state["session-id"]){
+                        user = req.state["session-id"].user;
+                    }
+                    return h.view('forms/addForm', {
+                        usuarioAutenticado: user
+                    }, { layout: 'base' });
                 }
             },
             {
                 method: 'POST',
                 path: '/addForm',
+                options: {
+                    auth: 'auth-registrado'
+                },
                 handler: async (req, h) => {
                     // var numPreguntas = Object.keys(req.payload).filter(x => x.includes('obligatoria')).length; <--- error al insertar no obligatorias
                     var numPreguntas = Object.keys(req.payload).filter(x => x.includes('tipo')).length;
@@ -82,7 +192,7 @@ module.exports = {
                                 pgUltima = pgUltima + 1;
                             }
 
-                        })
+                        });
                     var paginas = [];
                     var previous = true;
                     var next = true;
@@ -198,9 +308,12 @@ module.exports = {
                         tags += formEdit.tags[i] + "; ";
                     }
                     formEdit.tags = tags;
-
+                    user = {};
+                    if(req.state["session-id"]){
+                        user = req.state["session-id"].user;
+                    }
                     return h.view('forms/editForm',
-                        { form: formEdit },
+                        { form: formEdit, usuarioAutenticado: user },
                         { layout: 'base' });
                 }
             },
@@ -223,7 +336,7 @@ module.exports = {
                         .then((db) => repositorioForm.deleteForm(db, criterio))
                         .then((resultado) => {
                             console.log("Eliminado")
-                        })
+                        });
 
                     return h.redirect('/misForms?mensaje="Formulario eliminado"')
                 }
@@ -231,4 +344,4 @@ module.exports = {
 
         ])
     }
-}
+};

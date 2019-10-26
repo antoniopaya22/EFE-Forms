@@ -11,7 +11,7 @@ module.exports = {
                 method: 'GET',
                 path: '/',
                 handler: async(req, h) => {
-                    user = {}
+                    user = {};
                     if(req.state["session-id"]){
                         user = req.state["session-id"].user;
                     }
