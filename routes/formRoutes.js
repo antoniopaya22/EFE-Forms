@@ -27,11 +27,18 @@ module.exports = {
                         requerida: form.preguntas.filter(y => y.pregunta.includes(x.split('pre_')[1]))[0].requerida,
                         respuesta: x
                     }));
+                    user_respuesta = "";
+                    if(req.state["session-id"]){
+                        user_respuesta = req.state["session-id"].user;
+                    }else{
+                        user_respuesta = "anonimo"; // esto lo dejamos "anónimo" o undefined? eso lo puedes cambiar si necesitas comprobar algo con un if en la vista
+                    }
                     var respuesta = {
                         formid: req.params.id,
-                        autor: "asuario-anonimo", //TODO
+                        autor: user, 
                         preguntas: preguntas
                     };
+                    //////////////////////////// publico privado
                     var resp = "";
                     await repositorioRespuesta.conexion()
                         .then((db) => repositorioRespuesta.addRespuesta(db,respuesta))
@@ -48,14 +55,12 @@ module.exports = {
             {
                 method: 'GET',
                 path: '/form/{id}/addRespuesta',
-                options: {
-                    auth: 'auth-registrado'
-                },
+              
                 handler: async (req, h) => {
 
                     var criterio = {
-                        "_id": require("mongodb").ObjectID(req.params.id),
-                        "propietario": req.auth.credentials
+                        "_id": require("mongodb").ObjectID(req.params.id)
+                        //"propietario": req.auth.credentials ----> no tienes que ser propietario para contestar
                     };
 
                     await repositorioForm.conexion()
@@ -63,13 +68,21 @@ module.exports = {
                         .then((forms) => {
                             formEdit = forms[0];
                         });
-                    user = {};
+                    user = undefined;
                     if(req.state["session-id"]){
                         user = req.state["session-id"].user;
                     }
-                    return h.view('forms/addRespuesta',
+                    if(formEdit.publico || (!formEdit.publico && user)){
+                        return h.view('forms/addRespuesta',
                         { form: formEdit, usuarioAutenticado: user },
                         { layout: 'base' });
+                    }else{
+                        // aqui habra que retornar la vista por defecto, que no se cual ye tovia lol
+                        // de momento, retorna a login
+                        var message = "Log in para responder"
+                        return h.redirect('/login?mensaje='+message);
+                    }
+                    
                 }
 
             },
@@ -84,7 +97,7 @@ module.exports = {
                     var criterio = {
                         "_id": require("mongodb").ObjectID(req.params.id)
                     };
-                    user = {};
+                    user = undefined;
                     if(req.state["session-id"]){
                         user = req.state["session-id"].user;
                     }
@@ -111,7 +124,7 @@ module.exports = {
                     auth: 'auth-registrado'
                 },
                 handler: async (req, h) => {
-                    user = {};
+                    user = undefined;
                     if(req.state["session-id"]){
                         user = req.state["session-id"].user;
                     }
@@ -127,7 +140,6 @@ module.exports = {
                     auth: 'auth-registrado'
                 },
                 handler: async (req, h) => {
-                    // var numPreguntas = Object.keys(req.payload).filter(x => x.includes('obligatoria')).length; <--- error al insertar no obligatorias
                     var numPreguntas = Object.keys(req.payload).filter(x => x.includes('tipo')).length;
                     var preguntas = [];
                     for (let i = 0; i < numPreguntas; i++) {
