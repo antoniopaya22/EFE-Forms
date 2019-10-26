@@ -3,7 +3,7 @@
 <div uk-grid>
     <div class="efe-form-card uk-width-1-4"></div>
     <div class="uk-card uk-card-default uk-card-body uk-width-1-2">
-        <form method="post" action="/addForm">
+        <form method="post" action="/form/{{form._id}}/edit">
             <fieldset class="uk-fieldset efe-form">
 
                 <legend class="uk-legend">Editar formulario con EFE-FORMS</legend>
@@ -52,10 +52,10 @@
                     <h3 class="uk-h3">{{sumar @index 1}}.</h3>
                     <div class="uk-grid-small" uk-grid>
                         <div class="uk-width-1-2@s uk-form-controls">
-                            <input class="uk-input" type="text" placeholder="Título de la pregunta" name="titulo1" value="{{pregunta}}">
+                            <input class="uk-input" type="text" placeholder="Título de la pregunta" name="titulo{{sumar @index 1}}" value="{{pregunta}}">
                         </div>
                         <div class="uk-width-1-2@s uk-form-controls">
-                            <select class="uk-select" name="tipo1">
+                            <select class="uk-select" name="tipo{{sumar @index 1}}">
                                 <option {{select tipo 'Texto'}} value="Texto">Texto</option>
                                 <option {{select tipo 'Fecha'}} value="Fecha">Fecha</option>
                                 <option {{select tipo 'Número'}} value="Número">Número</option>
@@ -65,11 +65,11 @@
                             </select>
                         </div>
                         <div class="uk-width-1-2@s uk-form-controls">
-                            <label><input class="uk-checkbox" type="checkbox" name="obligatoria1" {{check requerida}}> Respuesta
+                            <label><input class="uk-checkbox" type="checkbox" name="obligatoria{{sumar @index 1}}" {{check requerida}}> Respuesta
                                 obligatoria/requerida</label>
                         </div>
                         <div class="uk-width-1-2@s uk-form-controls">
-                            <button class="uk-button uk-border-rounded" type="button" onclick="removePregunta(1)">
+                            <button class="uk-button uk-border-rounded" type="button" onclick="removePregunta({{sumar @index 1}})">
                                 <span data-uk-icon="minus-circle" class="uk-margin-small-right"> </span>
                                 Borrar pregunta
                             </button>
@@ -88,7 +88,7 @@
             <hr class="uk-divider-icon">
             <button class="uk-button uk-button-efe uk-border-rounded uk-align-right" type="submit">
                 <span data-uk-icon="pencil" class="uk-margin-small-right"> </span>
-                Crear formulario
+                Editar formulario
             </button>
         </form>
     </div>

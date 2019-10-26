@@ -66,4 +66,21 @@ module.exports = {
 
         return promise;
     },
+    editForm : async (db, criterio, form) => {
+
+        promise = new Promise((resolve, reject) => {
+            var collection = db.collection('forms');
+            collection.update(criterio, {$set: form}, (err, result) => {
+                if (err) {
+                    resolve(null);
+                } else {
+                    // modificado
+                    resolve(result);
+                }
+                db.close();
+            });
+        });
+
+        return promise;
+    }
 }
