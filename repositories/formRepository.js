@@ -82,5 +82,20 @@ module.exports = {
         });
 
         return promise;
+    },
+    deleteForm : async (db, criterio) => {
+        promise = new Promise((resolve, reject) => {
+            var collection = db.collection('forms');
+            collection.remove(criterio, (err, result) => {
+                if (err) {
+                    resolve(null);
+                } else {
+                    resolve(result);
+                }
+                db.close();
+            });
+        });
+
+        return promise;
     }
 }

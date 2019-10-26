@@ -111,3 +111,18 @@
 .uk-table td {
     padding: 12px 12px;
 }
+
+/* EMPTY LIST */
+.container-empty-list{
+    text-align: center;
+    padding-top: 1vh;
+    display: block;
+}
+.bt-empty-list:hover,
+.bt-empty-list{
+    height: 6em;
+    color: #f00076;
+    background-color: transparent;
+    border: 5px dashed #f00076;
+    font-size: 1.5em;
+}

@@ -1,6 +1,20 @@
 <section class="uk-section">
     <div class="uk-container">
         <div class="uk-overflow-auto">
+            {{#if empty}}
+            <div class="container-empty-list">
+                <a href="/addForm" class="uk-button bt-empty-list uk-border-rounded">
+                    <div class="uk-child-width-1-1">
+                        <span data-uk-icon="pencil" class="" uk-icon="icon: pencil; ratio: 3">
+                        </span>
+                        <span>Crear formulario</span>
+                    </div>
+                </a>
+                <p>Comienza creando tu primer formulario</p>
+            </div>
+
+            {{/if}}
+            {{^empty}}
             <table class="uk-table uk-table-hover uk-table-middle uk-table-divider uk-table-responsive">
                 <thead>
                     <tr>
@@ -36,18 +50,25 @@
                     {{/each}}
                 </tbody>
             </table>
+            {{/empty}}
         </div>
 
         <ul class="uk-pagination uk-flex-center" uk-margin>
-            {{#if hasPrevious }}<li><a href="/misForms?pg={{ sumar current -1}}"><span uk-pagination-previous></span></a></li>{{/if}}
-            {{#each paginas}}
+            {{#if hasPrevious }}
+            <li><a href="/misForms?pg={{ sumar current -1}}"><span uk-pagination-previous></span></a></li>{{/if}}
 
+            {{#if hasPrevNext }}
+            {{#each paginas}}
             <li class="{{ clase }}">
                 <a href="/misForms?pg={{ valor }}">{{ valor }}</a>
             </li>
 
             {{/each}}
-            {{#if hasNext }}<li><a href="/misForms?pg={{ sumar current 1}}"><span uk-pagination-next></span></a></li>{{/if}}
+            {{/if}}
+
+            {{#if hasNext }}
+            <li><a href="/misForms?pg={{ sumar current 1}}"><span uk-pagination-next></span></a></li>
+            {{/if}}
         </ul>
 
     </div>

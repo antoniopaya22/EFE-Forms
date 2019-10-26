@@ -77,7 +77,7 @@ module.exports = {
                             formsEjemplo = forms;
 
                             pgUltima = formsEjemplo.total / 2;
-                            if (pgUltima % 2 > 0) {
+                            if (formsEjemplo.total % 2 > 0) {
                                 pgUltima = Math.trunc(pgUltima);
                                 pgUltima = pgUltima + 1;
                             }
@@ -111,7 +111,9 @@ module.exports = {
                             paginas: paginas,
                             current: pg,
                             hasPrevious: previous,
-                            hasNext: next
+                            hasNext: next,
+                            empty: formsEjemplo.total == 0 ? true: false,
+                            hasPrevNext: previous || next
                         },
                         { layout: 'base' });
                 }
@@ -129,8 +131,6 @@ module.exports = {
                         "_id": require("mongodb").ObjectID(req.params.id),
                         "propietario": req.auth.credentials
                     };
-
-
                     var numPreguntas = Object.keys(req.payload).filter(x => x.includes('tipo')).length;
                     var preguntas = [];
                     for (let i = 0; i < numPreguntas; i++) {
@@ -202,6 +202,30 @@ module.exports = {
                     return h.view('forms/editForm',
                         { form: formEdit },
                         { layout: 'base' });
+                }
+            },
+
+            // ================== Eliminar forms =======================
+            {
+                method: 'GET',
+                path: '/form/{id}/delete',
+                options: {
+                    auth: 'auth-registrado'
+                },
+                handler: async (req, h) => {
+
+                    var criterio = { "_id" :
+                            require("mongodb").ObjectID(req.params.id),
+                        "propietario": req.auth.credentials
+                    };
+
+                    await repositorioForm.conexion()
+                        .then((db) => repositorioForm.deleteForm(db, criterio))
+                        .then((resultado) => {
+                            console.log("Eliminado")
+                        })
+
+                    return h.redirect('/misForms?mensaje="Formulario eliminado"')
                 }
             }
 
