@@ -6,6 +6,7 @@ module.exports = {
         repositorioForm = server.methods.getFormRepository();
         repositorioRespuesta = server.methods.getRespuestaRepository();
         server.route([
+
             // ================== GET FORM =======================
             {
                 method: 'GET',
