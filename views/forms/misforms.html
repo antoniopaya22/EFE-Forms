@@ -27,7 +27,7 @@
                 <tbody>
                     {{#each forms}}
                     <tr class="table-hover">
-                        <td><strong>{{ titulo }}</strong></td>
+                        <td><a href="/form/{{_id}}"> {{ titulo }}</a></td>
                         <td>{{ descripcion }}</td>
                         <td>{{#each tags}}
                             <span class="uk-badge">{{ this }}</span>

@@ -27,7 +27,21 @@ module.exports = {
                 db.close();
             });
         });
+        return promise;
+    },
+    getRespuestas: async (db, criterio) => {
+        promise = new Promise((resolve, reject) => {
+            var collection = db.collection('respuestas');
+            collection.find(criterio).toArray( (err, result) => {
+                if (err) {
+                    resolve(null);
+                } else {
+                    resolve(result);
+                }
+                db.close();
+            });
+        });
 
         return promise;
     },
-}
+};

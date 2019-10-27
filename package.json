@@ -29,9 +29,9 @@
         "@hapi/inert": "^5.2.2",
         "@hapi/vision": "^5.5.4",
         "handlebars": "^4.4.5",
-        "mongodb": "^2.2.33",
         "hapi-error": "^2.1.0",
         "mongo": "^0.1.0",
+        "mongodb": "^2.2.33",
         "nodemon": "^1.19.4"
     }
 }

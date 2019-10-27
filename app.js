@@ -61,6 +61,9 @@ handlebars.registerHelper("getTipo", (a) => {
     else if(a === "Número") return "number";
     else return "text";
 })
+handlebars.registerHelper("get", (a, b) => {
+    return a[parseInt(b)].pregunta;
+})
 
 // INICIAR SERVER
 const iniciarServer = async() => {
