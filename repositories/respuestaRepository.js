@@ -15,10 +15,24 @@ module.exports = {
         });
         return promise;
     },
-    obtenerUsuarios: async (db, criterio) => {
+    addRespuesta: async(db, respuesta) => {
         promise = new Promise((resolve, reject) => {
-            var collection = db.collection('users');
-            collection.find(criterio).toArray((err, result) => {
+            var collection = db.collection('respuestas');
+            collection.insert(respuesta, (err, result) => {
+                if (err) {
+                    resolve(null);
+                } else {
+                    resolve(result.ops[0]._id.toString());
+                }
+                db.close();
+            });
+        });
+        return promise;
+    },
+    getRespuestas: async (db, criterio) => {
+        promise = new Promise((resolve, reject) => {
+            var collection = db.collection('respuestas');
+            collection.find(criterio).toArray( (err, result) => {
                 if (err) {
                     resolve(null);
                 } else {
@@ -30,35 +44,4 @@ module.exports = {
 
         return promise;
     },
-    insertarUsuario: async (db, newUser) => {
-        criterio = {
-            user: newUser.user
-        }
-        promise = new Promise((resolve, reject) => {
-            var collection = db.collection('users');
-            collection.find(criterio).toArray((err, result) => {
-
-                if (err) {
-                    resolve(null);
-                } else {
-                    if (result.length != 0) {
-                        resolve("NOT_VALID_USERNAME");
-                    } else {
-                        collection.insert(user, (err, result) => {
-                            if (err) {
-                                resolve(null);
-                            } else {
-                                resolve(result.ops[0]._id.toString());
-                            }
-                            db.close();
-                        });
-                    }
-                }
-                db.close();
-            });
-
-        });
-
-        return promise;
-    }
-}
+};

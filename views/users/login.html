@@ -6,7 +6,7 @@
                     <div class="uk-card uk-card-default uk-card-large uk-grid-collapse uk-child-width-1-2@s uk-margin uk-border-rounded"
                         uk-grid>
                         <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
-                            <img src="https://images.pexels.com/photos/1595387/pexels-photo-1595387.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="" uk-cover>
+                            <img src="img/fondo_login.png" alt="" uk-cover>
                             <canvas width="600" height="400"></canvas>
                         </div>
                         <div>
@@ -18,7 +18,7 @@
                                         <div class="uk-inline uk-width-1-1">
                                             <span class="uk-form-icon" uk-icon="icon: user"></span>
                                             <input id="username" class="uk-input" name="user" placeholder="Usuario..."
-                                                type="text" onkeyup="validForm()">
+                                                type="text">
                                         </div>
                                     </div>
                                     <div class="uk-margin ">
@@ -38,7 +38,7 @@
                                     <div class="uk-margin">
                                         <div class="uk-form-controls">
                                             <a id="submitt-button" type="submit" href="/register"
-                                                class="uk-button uk-button-efe uk-width-1-1 uk-margin-small-bottom">
+                                                class="uk-button uk-button-efe-contrast uk-width-1-1 uk-margin-small-bottom">
                                                 Crear cuenta
                                             </a>
                                         </div>
@@ -55,7 +55,6 @@
 
 <script>
     function validForm() {
-        console.log("lol")
         var valid = true;
         var username = document.getElementById("username").value;
         if (!validateNonEmpty('username', username)) valid = false;

@@ -7,6 +7,8 @@ const userRoutes = require("./routes/userRoutes.js");
 const formRoutes = require("./routes/formRoutes.js");
 const mainRoutes = require("./routes/mainRoutes.js");
 const userRepository = require("./repositories/userRepository");
+const formRepository = require("./repositories/formRepository");
+const respuestaRepository = require("./repositories/respuestaRepository");
 const Error = require('hapi-error');
 
 
@@ -25,6 +27,43 @@ server.method({
     options: {}
 });
 
+server.method({
+    name: 'getFormRepository',
+    method: () => {
+        return formRepository;
+    },
+    options: {}
+});
+
+server.method({
+    name: 'getRespuestaRepository',
+    method: () => {
+        return respuestaRepository;
+    },
+    options: {}
+});
+
+var handlebars = require('handlebars');
+handlebars.registerHelper("sumar", (a, b) => {
+    return a + b;
+})
+handlebars.registerHelper("select", (a, b) => {
+    if(a == b) return "selected";
+    return "";
+})
+handlebars.registerHelper("check", (a) => {
+    if(a) return "checked";
+    return "";
+})
+handlebars.registerHelper("getTipo", (a) => {
+    if(a === "Texto") return "text";
+    else if(a === "Fecha") return "date";
+    else if(a === "Número") return "number";
+    else return "text";
+})
+handlebars.registerHelper("get", (a, b) => {
+    return a[parseInt(b)].pregunta;
+})
 
 // INICIAR SERVER
 const iniciarServer = async() => {

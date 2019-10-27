@@ -11,7 +11,15 @@ module.exports = {
                 method: 'GET',
                 path: '/',
                 handler: async(req, h) => {
-                    return h.view('home', {}, { layout: 'base' });
+                    user = undefined;
+                    if(req.state["session-id"]){
+                        user = req.state["session-id"].user;
+                    }
+                    return h.view('home', 
+                    {
+                        usuarioAutenticado: user // añadir esto a todas las rutas que necesiten el usuario
+                    }, 
+                    { layout: 'base' });
                 }
             },
 

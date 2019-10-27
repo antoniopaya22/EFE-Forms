@@ -6,7 +6,7 @@
                     <div class="uk-card uk-card-default uk-card-large uk-grid-collapse uk-child-width-1-2@s uk-margin uk-border-rounded"
                         uk-grid>
                         <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
-                            <img src="https://images.pexels.com/photos/1595387/pexels-photo-1595387.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="" uk-cover>
+                            <img src="img/fondo_login.png" alt="" uk-cover>
                             <canvas width="600" height="400"></canvas>
                         </div>
                         <div>
@@ -41,16 +41,25 @@
                                     </div>
 
                                     <div class="uk-margin">
+                                        <small id="wrongpolicy" class="input-error-right">Acepta para registrarte</small>
                                         <div class="uk-form-controls">
-                                            <label><input class="uk-checkbox uk-margin-small-right"
-                                                    type="checkbox"><small>Accept our <a href="#" class="efe">Terms of Service</a>
-                                                    and <a href="#"  class="efe">Privacy Policy</a>.</small></label>
+                                            <label><input id="policy" class="uk-checkbox uk-margin-small-right"
+                                                    type="checkbox"><small>Acepta nuestros <a href="#" class="efe">Términos de Servicio</a>
+                                                    y <a href="#"  class="efe">Política de Privacidad</a>.</small></label>
                                         </div>
                                     </div>
                                     <div class="uk-margin">
                                         <div class="uk-form-controls">
                                             <input id="submitt-button" type="submit" value="Crear cuenta"
                                                 class="uk-button uk-button-efe uk-width-1-1 uk-margin-small-bottom">
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin">
+                                        <div class="uk-form-controls">
+                                            <a href="/login"
+                                               class="uk-button uk-button-efe-contrast uk-width-1-1 uk-margin-small-bottom">
+                                                Ya tengo una cuenta
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -65,7 +74,6 @@
 
 <script>
     function validForm() {
-        console.log("lol")
         var valid = true;
         var username = document.getElementById("username").value;
         if(!validateNonEmpty('username', username)) valid = false;
@@ -73,6 +81,11 @@
         if(!validateNonEmpty('passwd1', pass1))valid = false;
         var pass2 = document.getElementById("passwd2").value;
         if(!validateNonEmpty('passwd2', pass2))valid = false;
+        var policy = document.getElementById("passwd2").value;
+        if(!policy){
+            valid = false;
+            document.getElementById("wrongpolicy").className = "input-error-wrong";
+        }
         return valid;
     }
     function validateNonEmpty(field, value) {

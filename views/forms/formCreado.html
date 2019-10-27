@@ -1,0 +1,47 @@
+<section class="uk-section efe-form-card">
+</section>
+<div uk-grid>
+    <div class="efe-form-card uk-width-1-4"></div>
+    <div class="uk-card uk-card-default uk-card-body uk-width-1-2">
+        <h2 class="uk-h2 uk-text-uppercase">Formulario creado</h2>
+        <p>Título: {{form.titulo}}</p>
+        <p uk-margin>
+            <a class="uk-button uk-button-primary uk-border-rounded" href="/form/{{form._id}}">
+                <span data-uk-icon="comments" class="uk-margin-small-right"></span>
+                Ver las resupestas
+            </a>
+            <button class="uk-button uk-button-efe uk-border-rounded" uk-toggle="target: #modal-example">
+                <span data-uk-icon="social" class="uk-margin-small-right"></span>
+                Compartir formulario
+            </button>
+        </p>
+    </div>
+    <div class="efe-form-card uk-width-1-4"></div>
+</div>
+<section class="uk-section efe-form-card">
+</section>
+
+<!-- modal -->
+<div id="modal-example" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Compartir formulario</h2>
+        <input class="uk-input" type="text" id="toclip" readonly value="http://localhost:8080/form/{{form._id}}/addRespuesta">
+        <button onclick="toClipboard()" class="uk-button">
+            <span data-uk-icon="copy" class="uk-margin-small-right"></span>
+            Copiar enlace
+        </button>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-efe uk-modal-close" type="button">OK</button>
+        </p>
+    </div>
+</div>
+
+<script>
+    function toClipboard() {
+        var copyText = document.getElementById("toclip");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /*Para movil*/
+        document.execCommand("copy");
+        alert("Enlace copiado: " + copyText.value);
+    }
+</script>
