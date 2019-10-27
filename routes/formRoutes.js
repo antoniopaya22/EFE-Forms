@@ -6,6 +6,43 @@ module.exports = {
         repositorioRespuesta = server.methods.getRespuestaRepository();
         server.route([
 
+            // ================== GET FORM =======================
+            {
+                method: 'GET',
+                path: '/form/{id}',
+                handler: async (req, h) => {
+                    user = undefined;
+                    if (req.state["session-id"]) {
+                        user = req.state["session-id"].user;
+                    }
+                    var criterio = {
+                        "_id": require("mongodb").ObjectID(req.params.id)
+                    };
+                    var respuesta = "";
+                    await repositorioForm.conexion()
+                        .then((db) => repositorioForm.getForms(db, criterio))
+                        .then((forms) => {
+                            if (forms === null) {
+                                respuesta = h.redirect('/?mensaje="Error al encontrar el formulario"');
+                            } else {
+                                formEdit = forms[0];
+                            }
+                        });
+                    var criterioRespuesta = {
+                        "formid": req.params.id
+                    };
+                    await repositorioRespuesta.conexion()
+                        .then((db) => repositorioRespuesta.getRespuestas(db, criterioRespuesta))
+                        .then((respuestas) => {
+                            resp = respuestas.length == 0 ? [] : respuestas[0];
+                            respuesta = h.view('forms/form',
+                                { form: formEdit, usuarioAutenticado: user, respuestas: resp },
+                                { layout: 'base' });
+                        });
+                    return respuesta;
+                }
+
+            },
             // ================== Add Respuesta =======================
             {
                 method: 'POST',
@@ -163,15 +200,13 @@ module.exports = {
                     };
 
                     await repositorioForm.conexion()
-                        .then((db) => {
-                            repositorioForm.addForm(db, form)
-                        })
+                        .then((db) => repositorioForm.addForm(db, form))
                         .then((id) => {
                             respuesta = "";
                             if (id === null) {
-                                respuesta = h.redirect('/misForms?mensaje="Error al insertar"')
+                                respuesta = h.redirect(`/formCreado/${id}?mensaje="Error al insertar"`)
                             } else {
-                                respuesta = h.redirect('/misForms?mensaje="Formulario creado"')
+                                respuesta = h.redirect(`/formCreado/${id}?mensaje="Formulario creado"`)
                             }
                         });
                     return respuesta;

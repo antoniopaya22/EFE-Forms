@@ -1,0 +1,20 @@
+<section class="uk-section">
+    <div class="uk-container">
+        <div class="uk-overlay uk-overlay-default">
+            <h2 class="uk-margin">{{form.titulo}}</h2>
+        </div>
+        <div uk-grid>
+            {{#each form.preguntas}}
+            <div class="uk-width-1-2">
+                <h4>{{pregunta}}</h4>
+                <h5>Respuestas:</h5>
+                <ul class="uk-list uk-list-large uk-list-divider">
+                    {{#each respuestas}}
+                    <li>List item 1</li>
+                </ul>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+
