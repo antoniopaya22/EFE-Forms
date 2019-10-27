@@ -1,11 +1,11 @@
 module.exports = {
     name: 'FormRouter',
     register: async (server, options) => {
+
         miserver = server;
         repositorioForm = server.methods.getFormRepository();
         repositorioRespuesta = server.methods.getRespuestaRepository();
         server.route([
-
             // ================== GET FORM =======================
             {
                 method: 'GET',
@@ -34,9 +34,18 @@ module.exports = {
                     await repositorioRespuesta.conexion()
                         .then((db) => repositorioRespuesta.getRespuestas(db, criterioRespuesta))
                         .then((respuestas) => {
-                            resp = respuestas.length == 0 ? [] : respuestas[0];
+                            var allresp = [];
+                            respuestas.forEach(x => x.preguntas.forEach(y => allresp.push(y)));
+                            var x = allresp.reduce((r,a) => {
+                                r[a.pregunta] = [...r[a.pregunta] || [], a];
+                                return r;
+                            }, {});
+                            var y = [];
+                            Object.entries(x).forEach(([key, value]) => {
+                                y.push(value);
+                            });
                             respuesta = h.view('forms/form',
-                                { form: formEdit, usuarioAutenticado: user, respuestas: resp },
+                                { form: formEdit, usuarioAutenticado: user, respuestas: y },
                                 { layout: 'base' });
                         });
                     return respuesta;
@@ -62,7 +71,7 @@ module.exports = {
                         pregunta: form.preguntas.filter(y => y.pregunta.includes(x.split('pre_')[1]))[0].pregunta,
                         tipo: form.preguntas.filter(y => y.pregunta.includes(x.split('pre_')[1]))[0].tipo,
                         requerida: form.preguntas.filter(y => y.pregunta.includes(x.split('pre_')[1]))[0].requerida,
-                        respuesta: x
+                        respuesta: req.payload[x]
                     }));
                     user_respuesta = "";
                     if (req.state["session-id"]) {
