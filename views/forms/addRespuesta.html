@@ -12,7 +12,11 @@
             <fieldset class="uk-fieldset efe-form">
                 {{#each form.preguntas}}
                 <div class="uk-margin">
+                    {{#if requerida}}
+                    <label class="uk-form-label" for="pre_{{pregunta}}">{{pregunta}} <span class="obligatorio">*</span></label>
+                    {{else}}
                     <label class="uk-form-label" for="pre_{{pregunta}}">{{pregunta}}</label>
+                    {{/if}}
                     <div class="uk-form-controls">
                         <input class="uk-input" type="{{getTipo tipo}}" name="pre_{{pregunta}}"
                                id="pre_{{pregunta}}">
