@@ -137,3 +137,7 @@
 .small-efe{
     color: #999;
 }
+
+.obligatorio {
+    color: red;
+}

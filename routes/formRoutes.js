@@ -6,7 +6,6 @@ module.exports = {
         repositorioForm = server.methods.getFormRepository();
         repositorioRespuesta = server.methods.getRespuestaRepository();
         server.route([
-
             // ================== GET FORM =======================
             {
                 method: 'GET',
@@ -204,7 +203,7 @@ module.exports = {
                         titulo: req.payload.titulo,
                         descripcion: req.payload.descripcion,
                         propietario: req.state["session-id"].user,
-                        publico: req.payload.publico == 'Público' ? true : false,
+                        publico: req.payload.publico == 'on' ? true : false,
                         tags: new_tags,
                         preguntas: preguntas
                     };
