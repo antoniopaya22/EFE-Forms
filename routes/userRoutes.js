@@ -6,7 +6,7 @@ module.exports = {
 
         server.route([
             // ================== LOGOUT =======================
-            {
+            { 
                 method: 'GET',
                 path: '/logout',
                 handler: async(req, h) => {

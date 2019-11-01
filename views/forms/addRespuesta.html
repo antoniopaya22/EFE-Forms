@@ -1,9 +1,9 @@
 <section class="uk-section efe-form-card">
 </section>
 <div uk-grid>
-    <div class="efe-form-card uk-width-1-4"></div>
-    <div class="uk-card uk-card-default uk-card-body uk-width-1-2">
-        <form method="post" action="/form/{{form._id}}/addRespuesta">
+    <div class="efe-form-card uk-width-1-4 uk-visible@m"></div>
+    <div class="uk-card uk-card-default uk-card-body@m uk-width-1-2@m uk-width-1-1@s">
+        <form class="form-small@s uk-padding-small" method="post" action="/form/{{form._id}}/addRespuesta">
             <fieldset class="uk-fieldset efe-form">
                 <legend class="uk-legend">{{form.titulo}}</legend>
                 <p>{{form.descripcion}}</p>
@@ -27,7 +27,7 @@
             </button>
         </form>
     </div>
-    <div class="efe-form-card uk-width-1-4"></div>
+    <div class="efe-form-card uk-width-1-4 uk-visible@m"></div>
 </div>
 <section class="uk-section efe-form-card">
 </section>
