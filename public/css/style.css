@@ -72,7 +72,9 @@
 }
 
 .uk-badge{
-    background-color: #444444;
+    background-color: white !important;
+    border: 1px solid #ffe3f3 !important;
+    color: #ff51a5 !important;
 }
 /* TABLES */
 .table-hover:hover{
@@ -136,4 +138,34 @@
 
 .small-efe{
     color: #999;
+}
+.item-pag{
+    margin: 3px !important;
+    color: rgb(140, 140, 140) !important;
+}
+.uk-active > .item-pag{
+    color: #666 !important;
+}
+.pagination{
+    display: inherit;
+    padding-left: 17vw;
+}
+.resume-pag{
+    text-align: right;
+    padding-right: 12px;
+}
+.small-pag > span > svg{
+    max-width: 200% !important;
+    width: 20px !important;
+    color: #666;
+}
+.small-pag{
+    margin-left: 3em;
+}
+.small-pagination{
+    padding-left: 0;
+}
+input:focus, select:focus{
+    border: 2px solid #f08ac4 !important;
+    background-color: #fff7fb !important;
 }

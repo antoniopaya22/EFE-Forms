@@ -18,7 +18,7 @@ module.exports = {
                     return h.view('home', 
                     {
                         usuarioAutenticado: user // añadir esto a todas las rutas que necesiten el usuario
-                    }, 
+                    },
                     { layout: 'base' });
                 }
             },

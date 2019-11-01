@@ -43,7 +43,7 @@ module.exports = {
                             redir = "";
                             if (users == null || users.length == 0) {
                                 respuesta =  "Credenciales incorrectas"
-                                redir = '/login?mensaje='+respuesta;
+                                redir = '/login?mensaje='+respuesta+'&tipoMensaje=danger';
 
                             } else {
                                 req.cookieAuth.set({
@@ -86,9 +86,9 @@ module.exports = {
                         .then((id) => {
                             respuesta = "";
                             if (id == null) {
-                                respuesta = h.redirect('/register?mensaje="Error al crear cuenta"')
+                                respuesta = h.redirect('/register?mensaje="Error al crear cuenta&tipoMensaje=danger"')
                             } if(id == "NOT_VALID_USERNAME"){
-                                respuesta = h.redirect('/register?mensaje="Usuario no disponible"')
+                                respuesta = h.redirect('/register?mensaje="Usuario no disponible&tipoMensaje=warning"')
                             }else {
                                 respuesta = h.redirect('/login')
                                 idAnuncio = id;

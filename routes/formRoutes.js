@@ -16,39 +16,43 @@ module.exports = {
                     if (req.state["session-id"]) {
                         user = req.state["session-id"].user;
                     }
-                    var criterio = {
-                        "_id": require("mongodb").ObjectID(req.params.id)
-                    };
-                    var respuesta = "";
-                    await repositorioForm.conexion()
-                        .then((db) => repositorioForm.getForms(db, criterio))
-                        .then((forms) => {
-                            if (forms === null) {
-                                respuesta = h.redirect('/?mensaje="Error al encontrar el formulario"');
-                            } else {
-                                formEdit = forms[0];
-                            }
-                        });
-                    var criterioRespuesta = {
-                        "formid": req.params.id
-                    };
-                    await repositorioRespuesta.conexion()
-                        .then((db) => repositorioRespuesta.getRespuestas(db, criterioRespuesta))
-                        .then((respuestas) => {
-                            var allresp = [];
-                            respuestas.forEach(x => x.preguntas.forEach(y => allresp.push(y)));
-                            var x = allresp.reduce((r,a) => {
-                                r[a.pregunta] = [...r[a.pregunta] || [], a];
-                                return r;
-                            }, {});
-                            var y = [];
-                            Object.entries(x).forEach(([key, value]) => {
-                                y.push(value);
+                    if (require("mongodb").ObjectID.isValid(req.params.id)) {
+                        var criterio = {
+                            "_id": require("mongodb").ObjectID(req.params.id)
+                        };
+                        var respuesta = "";
+                        await repositorioForm.conexion()
+                            .then((db) => repositorioForm.getForms(db, criterio))
+                            .then((forms) => {
+                                if (forms === null) {
+                                    respuesta = h.redirect('/?mensaje=Formulario no encontrado&tipoMensaje=warning');
+                                } else {
+                                    formEdit = forms[0];
+                                }
                             });
-                            respuesta = h.view('forms/form',
-                                { form: formEdit, usuarioAutenticado: user, respuestas: y },
-                                { layout: 'base' });
-                        });
+                        var criterioRespuesta = {
+                            "formid": req.params.id
+                        };
+                        await repositorioRespuesta.conexion()
+                            .then((db) => repositorioRespuesta.getRespuestas(db, criterioRespuesta))
+                            .then((respuestas) => {
+                                var allresp = [];
+                                respuestas.forEach(x => x.preguntas.forEach(y => allresp.push(y)));
+                                var x = allresp.reduce((r, a) => {
+                                    r[a.pregunta] = [...r[a.pregunta] || [], a];
+                                    return r;
+                                }, {});
+                                var y = [];
+                                Object.entries(x).forEach(([key, value]) => {
+                                    y.push(value);
+                                });
+                                respuesta = h.view('forms/form',
+                                    { form: formEdit, usuarioAutenticado: user, respuestas: y },
+                                    { layout: 'base' });
+                            });
+                    } else {
+                        respuesta = h.redirect('/?mensaje=Formulario no encontrado&tipoMensaje=warning');
+                    }
                     return respuesta;
                 }
 
@@ -91,7 +95,7 @@ module.exports = {
                         .then((db) => repositorioRespuesta.addRespuesta(db, respuesta))
                         .then((id) => {
                             if (id === null) {
-                                resp = h.redirect('/?mensaje=Error');
+                                resp = h.redirect('/?mensaje=Error&tipoMensage=danger');
                             } else {
                                 resp = h.redirect('/?mensaje=Respuesta->enviada');
                             }
@@ -124,10 +128,9 @@ module.exports = {
                             { form: formEdit, usuarioAutenticado: user },
                             { layout: 'base' });
                     } else {
-                        // aqui habra que retornar la vista por defecto, que no se cual ye tovia lol
-                        // de momento, retorna a login
-                        var message = "Log in para responder"
-                        return h.redirect('/login?mensaje=' + message);
+                       
+                        
+                        return h.redirect('/login?mensaje=Log in para responder&tipoMensaje=warning');
                     }
 
                 }
@@ -153,7 +156,7 @@ module.exports = {
                         .then((db) => repositorioForm.getForms(db, criterio))
                         .then((forms) => {
                             if (forms === null) {
-                                respuesta = h.redirect('/?mensaje="Error al insertar"');
+                                respuesta = h.redirect('/?mensaje="Error al añadir formulario&tipoMensaje=danger"');
                             } else {
                                 respuesta = h.view('forms/formCreado', {
                                     form: forms[0],
@@ -214,7 +217,7 @@ module.exports = {
                         .then((id) => {
                             respuesta = "";
                             if (id === null) {
-                                respuesta = h.redirect(`/formCreado/${id}?mensaje="Error al insertar"`)
+                                respuesta = h.redirect(`/formCreado/${id}?mensaje="Error al insertar&tipoMensaje=danger"`)
                             } else {
                                 respuesta = h.redirect(`/formCreado/${id}?mensaje="Formulario creado"`)
                             }
@@ -237,12 +240,11 @@ module.exports = {
                     }
 
                     var criterio = { "propietario": req.auth.credentials };
-
+                    var total = 0;
                     await repositorioForm.conexion()
                         .then((db) => repositorioForm.getFormsPg(db, pg, criterio))
                         .then((forms, total) => {
                             formsEjemplo = forms;
-
                             pgUltima = formsEjemplo.total / 2;
                             if (formsEjemplo.total % 2 > 0) {
                                 pgUltima = Math.trunc(pgUltima);
@@ -273,6 +275,7 @@ module.exports = {
                     }
                     // Recorte
                     formsEjemplo.forEach((e) => {
+                        e.titulo_largo = e.titulo;
                         if (e.titulo.length > 25) {
                             e.titulo = e.titulo.substring(0, 25) + "...";
                         }
@@ -289,7 +292,8 @@ module.exports = {
                             hasPrevious: previous,
                             hasNext: next,
                             empty: formsEjemplo.total == 0 ? true : false,
-                            hasPrevNext: previous || next
+                            hasPrevNext: previous || next,
+                            totalForms: formsEjemplo.total
                         },
                         { layout: 'base' });
                 }
@@ -341,7 +345,7 @@ module.exports = {
                         .then((id) => {
                             respuesta = "";
                             if (id == null) {
-                                respuesta = "Error al modificar"
+                                respuesta = "Error al modificar&tipoMensaje=danger"
                             } else {
                                 respuesta = "Editado";
                             }
@@ -437,13 +441,13 @@ module.exports = {
                                 new_tags.pop();
                             }
                             var tag_obj = ".*(";
-                            for(var i = 0; i < new_tags.length; i++){
-                                if(i != new_tags.length-1){
+                            for (var i = 0; i < new_tags.length; i++) {
+                                if (i != new_tags.length - 1) {
                                     tag_obj += new_tags[i] + "|";
-                                }else{
+                                } else {
                                     tag_obj += new_tags[i];
                                 }
-                                
+
                             }
                             tag_obj += ").*";
                             criterio = {
@@ -496,6 +500,7 @@ module.exports = {
 
                     // Recorte
                     formsEjemplo.forEach((e) => {
+                        e.titulo_largo = e.titulo;
                         if (e.titulo.length > 25) {
                             e.titulo = e.titulo.substring(0, 25) + "...";
                         }
@@ -513,7 +518,8 @@ module.exports = {
                             hasNext: next,
                             empty: formsEjemplo.total == 0 ? true : false,
                             hasPrevNext: previous || next,
-                            filter: searchBy
+                            filter: searchBy,
+                            totalForms: formsEjemplo.total
                         },
                         { layout: 'base' });
                 }
