@@ -191,6 +191,10 @@
 .div-bts-add-del{
     margin-left: 0 !important;
 }
+.sad-face{
+    height: 90px;
+    font-size: 60px;
+}
 @media (max-width: 640px) {
     .ck-required{
         width: 45px;
@@ -206,6 +210,9 @@
     }
     .uk-padding-remove-left-efe { 
         padding-left: 0px !important; 
+    }
+    .div-sad-face{
+        margin-left: 0 !important;
     }
 }
 @media (min-width: 640px) {

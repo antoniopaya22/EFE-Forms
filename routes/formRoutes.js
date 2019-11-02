@@ -47,7 +47,7 @@ module.exports = {
                                     y.push(value);
                                 });
                                 respuesta = h.view('forms/form',
-                                    { form: formEdit, usuarioAutenticado: user, respuestas: y },
+                                    { form: formEdit, usuarioAutenticado: user, respuestas: y, empty: respuestas.length == 0 ? true : false },
                                     { layout: 'base' });
                             });
                     } else {
