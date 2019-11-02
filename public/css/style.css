@@ -139,6 +139,11 @@
 .small-efe{
     color: #999;
 }
+
+.obligatorio {
+    color: red;
+}
+
 .item-pag{
     margin: 3px !important;
     color: rgb(140, 140, 140) !important;
