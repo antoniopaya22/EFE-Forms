@@ -1,26 +1,26 @@
 <section class="uk-section efe-form-card">
 </section>
 <div uk-grid>
-    <div class="efe-form-card uk-width-1-4"></div>
-    <div class="uk-card uk-card-default uk-card-body uk-width-1-2">
-        <form method="post" action="/addForm">
+    <div class="efe-form-card uk-width-1-4 uk-visible@m"></div>
+    <div class="uk-card uk-card-default uk-card-body@m uk-width-1-2@m uk-width-1-1@s form-div">
+        <form class="form-small@s uk-padding-small" method="post" action="/addForm">
             <fieldset class="uk-fieldset efe-form">
 
-                <legend class="uk-legend">Añadir nuevo formulario con EFE-FORMS</legend>
+                <legend class="uk-legend">Añadir nuevo formulario</legend>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="titulo">Título del formulario</label>
+                    <label class="uk-form-label" for="titulo">Título del formulario <span class="obligatorio">*</span></label>
                     <div class="uk-form-controls">
-                        <input class="uk-input uk-form-large" type="text"
-                            placeholder="Título del formulario" name="titulo" id="titulo">
+                        <input class="uk-input uk-form-large" type="text" placeholder="Título del formulario"
+                            name="titulo" id="titulo">
                     </div>
                 </div>
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="descripcion">Descripción del formulario</label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" type="text"
-                               placeholder="Descripción del formulario" name="descripcion" id="descripcion">
+                        <input class="uk-input" type="text" placeholder="Descripción del formulario" name="descripcion"
+                            id="descripcion">
                     </div>
                 </div>
             </fieldset>
@@ -28,19 +28,17 @@
             <fieldset class="uk-fieldset efe-form">
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="publico">Privacidad</label>
+                    <label class="uk-form-label">Privacidad <span class="obligatorio">*</span></label>
                     <div class="uk-form-controls">
-                        <select class="uk-select" name="publico" id="publico">
-                            <option>Público</option>
-                            <option>Privado</option>
-                        </select>
+                        <label><input class="uk-radio" type="radio" name="publico" checked> Público</label>
+                        <label><input class="uk-radio" type="radio" name="publico"> Privado</label>
                     </div>
                 </div>
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="tags">Tags</label>
+                    <label class="uk-form-label" for="tags">Tags <span class="obligatorio">*</span></label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" type="text"
-                               placeholder="Lista de etiquetas separadas por ';'" name="tags" id="tags">
+                        <input class="uk-input" type="text" placeholder="Lista de etiquetas separadas por ';'"
+                            name="tags" id="tags">
                     </div>
                 </div>
 
@@ -53,45 +51,59 @@
                         <div class="uk-width-1-2@s uk-form-controls">
                             <input class="uk-input" type="text" placeholder="Título de la pregunta" name="titulo1">
                         </div>
-                        <div class="uk-width-1-2@s uk-form-controls">
+                        <div class="uk-width-1-4@s uk-form-controls">
                             <select class="uk-select" name="tipo1">
                                 <option>Texto</option>
                                 <option>Fecha</option>
                                 <option>Número</option>
                             </select>
                         </div>
-                        <div class="uk-width-1-2@s uk-form-controls">
-                            <label><input class="uk-checkbox" type="checkbox" name="obligatoria1" checked> Respuesta obligatoria/requerida</label>
+                        <div class="uk-width-1-4@s uk-form-controls" uk-grid>
+                            <div class="uk-width-1-2 uk-form-controls">
+                                <label><input class="uk-checkbox ck-required" type="checkbox" name="obligatoria1"
+                                        checked uk-tooltip="Marcar campo obligatorio"></label>
+                            </div>
+                            <div class="uk-width-1-2 uk-form-controls uk-grid-margin@m">
+                                <button class="uk-button uk-border-rounded add-f-del" uk-tooltip="Borrar pregunta"
+                                    type="button" onclick="removePregunta(1)">
+                                    <span data-uk-icon="minus-circle" class="uk-margin-small-right"> </span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="uk-width-1-2@s uk-form-controls">
-                            <button class="uk-button uk-border-rounded" type="button" onclick="removePregunta(1)">
-                                <span data-uk-icon="minus-circle" class="uk-margin-small-right"> </span>
-                                Borrar pregunta
-                            </button>
-                        </div>
+
                     </div>
                     <hr class="uk-divider-icon">
                 </fieldset>
             </div>
-            <button class="uk-button uk-border-rounded uk-button-primary uk-align-center" id="addPregunta" type="button">
-                <span data-uk-icon="plus-circle" class="uk-margin-small-right"> </span>
-                Añadir pregunta
-            </button>
+            <div class="div-bts-add-del" uk-grid>
+                <button class="uk-button uk-border-rounded uk-button-primary uk-width-1-2@s uk-grid-margin" id="addPregunta"
+                    type="button">
+                    <span data-uk-icon="plus-circle" class="uk-margin-small-right"> </span>
+                    Añadir pregunta
+                </button>
+                <button class="uk-button uk-border-rounded uk-width-1-2@s uk-grid-margin" id="removePreguntas"
+                    type="button">
+                    <span data-uk-icon="minus-circle" class="uk-margin-small-right"> </span>
+                    Borrar todas las preguntas
+                </button>
+            </div>
+
             <hr class="uk-divider-icon">
-            <button class="uk-button uk-button-efe uk-border-rounded uk-align-right" type="submit">
+            <button class="uk-button uk-button-efe uk-border-rounded uk-align-center" type="submit">
                 <span data-uk-icon="pencil" class="uk-margin-small-right"> </span>
                 Crear formulario
             </button>
         </form>
     </div>
-    <div class="efe-form-card uk-width-1-4"></div>
+    <div class="efe-form-card uk-width-1-4 uk-visible@m"></div>
 </div>
 <section class="uk-section efe-form-card">
 </section>
 
 <script type="application/javascript">
     var numP = 1;
-    document.getElementById('addPregunta').addEventListener('click',addPregunta);
+    document.getElementById('addPregunta').addEventListener('click', addPregunta);
+    document.getElementById('removePreguntas').addEventListener('click', removeAllPreguntas);
     function addPregunta() {
         numP++;
         const pregunta = document.createElement('fieldset');
@@ -103,21 +115,24 @@
                         <div class="uk-width-1-2@s uk-form-controls">
                             <input class="uk-input" type="text" placeholder="Título de la pregunta" name="titulo${numP}">
                         </div>
-                        <div class="uk-width-1-2@s uk-form-controls">
+                        <div class="uk-width-1-4@s uk-form-controls">
                             <select class="uk-select" name="tipo${numP}">
                                 <option>Texto</option>
                                 <option>Fecha</option>
                                 <option>Número</option>
                             </select>
                         </div>
-                        <div class="uk-width-1-2@s uk-form-controls">
-                            <label><input class="uk-checkbox" type="checkbox" name="obligatoria${numP}" checked> Respuesta obligatoria/requerida</label>
-                        </div>
-                        <div class="uk-width-1-2@s uk-form-controls">
-                            <button class="uk-button uk-border-rounded" onclick="removePregunta(${numP})" type="button">
-                                <span data-uk-icon="minus-circle" class="uk-margin-small-right"> </span>
-                                Borrar pregunta
-                            </button>
+                        <div class="uk-width-1-4@s uk-form-controls" uk-grid>
+                            <div class="uk-width-1-2 uk-form-controls">
+                                <label><input class="uk-checkbox ck-required" type="checkbox" name="obligatoria${numP}"
+                                        checked uk-tooltip="Marcar campo obligatorio"></label>
+                            </div>
+                            <div class="uk-width-1-2 uk-form-controls uk-grid-margin@m">
+                                <button class="uk-button uk-border-rounded add-f-del" uk-tooltip="Borrar pregunta"
+                                    type="button" onclick="removePregunta(${numP})">
+                                    <span data-uk-icon="minus-circle" class="uk-margin-small-right"> </span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <hr class="uk-divider-icon">
@@ -129,5 +144,12 @@
     function removePregunta(num) {
         numP--;
         document.getElementById(`pregunta${num}`).remove();
+    }
+    function removeAllPreguntas() {
+        var preguntas = numP;
+        for (var i = 1; i <= preguntas; i++) {
+            removePregunta(i);
+        }
+        addPregunta();
     }
 </script>

@@ -47,6 +47,10 @@ var handlebars = require('handlebars');
 handlebars.registerHelper("sumar", (a, b) => {
     return a + b;
 })
+var handlebars = require('handlebars');
+handlebars.registerHelper("multiplicar", (a, b) => {
+    return a * b;
+})
 handlebars.registerHelper("select", (a, b) => {
     if(a == b) return "selected";
     return "";
