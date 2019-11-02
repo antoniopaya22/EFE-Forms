@@ -44,8 +44,22 @@ module.exports = {
                                 }, {});
                                 var y = [];
                                 Object.entries(x).forEach(([key, value]) => {
+                                    for( var val of value){
+                                        if(val.tipo == "Fecha"){
+                                            let date = new Date(val.respuesta)
+                                            let day = date.getDate()
+                                            let month = date.getMonth() + 1
+                                            let year = date.getFullYear()
+                                            if(month < 10){
+                                                val.respuesta = `${day}-0${month}-${year}`;
+                                            }else{
+                                                val.respuesta = `${day}-${month}-${year}`;
+                                        }
+                                      }
+                                    }
                                     y.push(value);
                                 });
+                                
                                 respuesta = h.view('forms/form',
                                     { form: formEdit, usuarioAutenticado: user, respuestas: y, empty: respuestas.length == 0 ? true : false },
                                     { layout: 'base' });
@@ -97,7 +111,7 @@ module.exports = {
                             if (id === null) {
                                 resp = h.redirect('/?mensaje=Error&tipoMensage=danger');
                             } else {
-                                resp = h.redirect('/?mensaje=Respuesta->enviada');
+                                resp = h.redirect('/?mensaje=Respuesta enviada');
                             }
                         });
                     return resp;
