@@ -9,7 +9,7 @@
                 <legend class="uk-legend">Añadir nuevo formulario</legend>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="titulo">Título del formulario</label>
+                    <label class="uk-form-label" for="titulo">Título del formulario <span class="obligatorio">*</span></label>
                     <div class="uk-form-controls">
                         <input class="uk-input uk-form-large" type="text" placeholder="Título del formulario"
                             name="titulo" id="titulo">
@@ -28,16 +28,14 @@
             <fieldset class="uk-fieldset efe-form">
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="publico">Privacidad</label>
+                    <label class="uk-form-label">Privacidad <span class="obligatorio">*</span></label>
                     <div class="uk-form-controls">
-                        <select class="uk-select" name="publico" id="publico">
-                            <option>Público</option>
-                            <option>Privado</option>
-                        </select>
+                        <label><input class="uk-radio" type="radio" name="publico" checked> Público</label>
+                        <label><input class="uk-radio" type="radio" name="publico"> Privado</label>
                     </div>
                 </div>
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="tags">Tags</label>
+                    <label class="uk-form-label" for="tags">Tags <span class="obligatorio">*</span></label>
                     <div class="uk-form-controls">
                         <input class="uk-input" type="text" placeholder="Lista de etiquetas separadas por ';'"
                             name="tags" id="tags">
