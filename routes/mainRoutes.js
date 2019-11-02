@@ -1,6 +1,6 @@
 module.exports = {
     name: 'MainRouter',
-    register: async(server, options) => {
+    register: async (server, options) => {
         miserver = server;
         repositorio = server.methods.getUserRepository();
 
@@ -10,16 +10,18 @@ module.exports = {
             {
                 method: 'GET',
                 path: '/',
-                handler: async(req, h) => {
+                handler: async (req, h) => {
                     user = undefined;
-                    if(req.state["session-id"].user){
-                        user = req.state["session-id"].user;
+                    if (req.state["session-id"]) {
+                        if (req.state["session-id"].user) {
+                            user = req.state["session-id"].user;
+                        }
                     }
-                    return h.view('home', 
-                    {
-                        usuarioAutenticado: user // añadir esto a todas las rutas que necesiten el usuario
-                    },
-                    { layout: 'base' });
+                    return h.view('home',
+                        {
+                            usuarioAutenticado: user // añadir esto a todas las rutas que necesiten el usuario
+                        },
+                        { layout: 'base' });
                 }
             },
 
@@ -27,7 +29,7 @@ module.exports = {
             {
                 method: 'GET',
                 path: '/error',
-                handler: async(req, h) => {
+                handler: async (req, h) => {
                     return h.view('error', {}, { layout: 'base' });
                 }
             },
