@@ -3,6 +3,22 @@
         <div class="uk-overlay uk-overlay-default">
             <h2 class="uk-margin">{{form.titulo}}</h2>
         </div>
+        {{#if empty}}
+            <div class="container-empty-list div-sad-face" uk-grid>
+                <div class="bt-empty-list uk-border-rounded uk-width-1-3@m uk-align-center uk-padding-remove-left">
+                    <div class="uk-child-width-1-1" uk-grid>
+                        <p class="sad-face">☹ </p>
+                        <p class="uk-margin-remove-top">No hay respuestas</p>
+                    </div>
+                </div>
+                <p class="uk-padding-remove-left">Vuelve más tarde</p>
+                <button class="uk-button uk-button-efe uk-border-rounded" uk-toggle="target: #modal-example">
+                    <span data-uk-icon="social" class="uk-margin-small-right"></span>
+                    Compartir formulario
+                </button>
+            </div>
+
+        {{/if}}
         <div uk-grid>
             {{#each respuestas}}
             <div class="uk-width-1-2">
@@ -18,4 +34,27 @@
         </div>
     </div>
 </section>
+<!-- modal -->
+<div id="modal-example" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Compartir formulario</h2>
+        <input class="uk-input" type="text" id="toclip" readonly value="http://localhost:8080/form/{{form._id}}/addRespuesta">
+        <button onclick="toClipboard()" class="uk-button">
+            <span data-uk-icon="copy" class="uk-margin-small-right"></span>
+            Copiar enlace
+        </button>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-efe uk-modal-close" type="button">OK</button>
+        </p>
+    </div>
+</div>
 
+<script>
+    function toClipboard() {
+        var copyText = document.getElementById("toclip");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /*Para movil*/
+        document.execCommand("copy");
+        alert("Enlace copiado: " + copyText.value);
+    }
+</script>

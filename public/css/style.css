@@ -72,7 +72,9 @@
 }
 
 .uk-badge{
-    background-color: #444444;
+    background-color: white !important;
+    border: 1px solid #ffe3f3 !important;
+    color: #ff51a5 !important;
 }
 /* TABLES */
 .table-hover:hover{
@@ -140,4 +142,97 @@
 
 .obligatorio {
     color: red;
+}
+
+.item-pag{
+    margin: 3px !important;
+    color: rgb(140, 140, 140) !important;
+}
+.uk-active > .item-pag{
+    color: #666 !important;
+}
+.pagination{
+    display: inherit;
+    padding-left: 17vw;
+}
+.resume-pag{
+    text-align: right;
+    padding-right: 12px;
+}
+.small-pag > span > svg{
+    max-width: 200% !important;
+    width: 20px !important;
+    color: #666;
+}
+.small-pag{
+    margin-left: 3em;
+}
+.small-pagination{
+    padding-left: 0;
+}
+.uk-input:focus, .uk-select:focus{
+    border: 2px solid #f08ac4 !important;
+    background-color: #fff7fb !important;
+}
+
+.add-f-del{
+    padding: 5px;
+    text-align: center;
+}
+.add-f-del>span{
+    margin-right: 0 !important;
+}
+.ck-required{
+    margin-top: 14px;
+}
+
+.big-nav-bar{
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 99;
+}
+
+.div-bts-add-del{
+    margin-left: 0 !important;
+}
+.sad-face{
+    height: 90px;
+    font-size: 60px;
+}
+@media (max-width: 640px) {
+    .ck-required{
+        width: 45px;
+        height: 45px;
+        margin-top: 0;
+        float: right;
+    }
+    .add-f-del{
+        padding: 5px;
+        text-align: center;
+        margin-left: 30px;
+        width: 100%;
+    }
+    .uk-padding-remove-left-efe { 
+        padding-left: 0px !important; 
+    }
+    .div-sad-face{
+        margin-left: 0 !important;
+    }
+}
+@media (min-width: 640px) {
+    .form-div{
+        padding-left: 0 !important;
+    }
+    #addPregunta{
+        margin-top: 0;
+        margin-right: 5%;
+        width: 45%;
+    }
+    #removePreguntas{
+        margin-top: 0;
+        margin-left: 5%;
+        width: 45%;
+    }
+    
 }

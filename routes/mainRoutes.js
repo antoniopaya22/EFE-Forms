@@ -12,13 +12,13 @@ module.exports = {
                 path: '/',
                 handler: async(req, h) => {
                     user = undefined;
-                    if(req.state["session-id"]){
+                    if(req.state["session-id"].user){
                         user = req.state["session-id"].user;
                     }
                     return h.view('home', 
                     {
                         usuarioAutenticado: user // añadir esto a todas las rutas que necesiten el usuario
-                    }, 
+                    },
                     { layout: 'base' });
                 }
             },

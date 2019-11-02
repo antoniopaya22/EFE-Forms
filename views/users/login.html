@@ -60,8 +60,6 @@
         if (!validateNonEmpty('username', username)) valid = false;
         var pass1 = document.getElementById("passwd1").value;
         if (!validateNonEmpty('passwd1', pass1)) valid = false;
-        var pass2 = document.getElementById("passwd2").value;
-        if (!validateNonEmpty('passwd2', pass2)) valid = false;
         return valid;
     }
     function validateNonEmpty(field, value) {
