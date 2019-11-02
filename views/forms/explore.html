@@ -5,25 +5,25 @@
                 <h2 class="uk-margin">Busca tu formulario</h2>
                 <div class="uk-margin">
                     <form class="uk-search uk-search-default uk-width-1-1" action="/explore">
+                    <small class="small-efe">Lista de etiquetas separadas por ';'</small>
                         <div uk-grid>
-                            <div class="uk-width-3-5">
-                                <span uk-search-icon></span>
+                            <div class="uk-width-2-3">
                                 <input class="uk-search-input" name="criterio" type="search" placeholder="Buscar...">
                             </div>
-                            <select class="uk-select uk-width-1-5" name="tipocriterio">
+                            <select class="uk-select uk-width-1-3 uk-padding-remove-left-efe" name="tipocriterio">
                                 <option value="titulo" {{select filter "titulo"}}>Título</option>
                                 <option value="tag" {{select filter "tag"}}>Etiquetas</option>
                             </select>
-                            <div class="uk-width-1-5">
-                                <button type="submit" class="uk-button uk-button-primary uk-border-rounded uk-visible@m">
-                                <span data-uk-icon="search" class="uk-margin-small-right">
-                                </span>
+                            <div class="uk-width-1-5@m">
+                                <button type="submit"
+                                    class="uk-button uk-button-primary uk-border-rounded">
+                                    <span data-uk-icon="search" class="uk-margin-small-right">
+                                    </span>
                                     Buscar
                                 </button>
                             </div>
                         </div>
                     </form>
-                    <small class="small-efe">Lista de etiquetas separadas por ';'</small>
                 </div>
             </div>
             {{#if empty}}
@@ -52,7 +52,7 @@
                 <tbody>
                     {{#each forms}}
                     <tr class="table-hover">
-                        <td  uk-tooltip="{{titulo_largo}}"><strong>{{ titulo }}</strong></td>
+                        <td uk-tooltip="{{titulo_largo}}"><strong>{{ titulo }}</strong></td>
                         <td>{{ descripcion }}</td>
                         <td>{{#each tags}}
                             <span class="uk-badge">{{ this }}</span>
@@ -60,8 +60,8 @@
                         </td>
                         <td>
                             <div class="group-bt-margin" width="100%" uk-grid>
-                                <a class="uk-link bt-table bt-table-res uk-width-1-2 uk-grid-margin" uk-tooltip="Responder preguntas"
-                                    href="/form/{{_id}}/addRespuesta">
+                                <a class="uk-link bt-table bt-table-res uk-width-1-2 uk-grid-margin"
+                                    uk-tooltip="Responder preguntas" href="/form/{{_id}}/addRespuesta">
                                     <span uk-icon="comment"></span>
                                 </a> <br>
                             </div>
@@ -73,44 +73,49 @@
             </table>
             {{/empty}}
         </div>
+        {{^empty }}
+        <ul class="uk-pagination uk-visible@m" uk-margin uk-grid>
+            <div class="uk-width-1-3"></div>
+            <div class="uk-width-1-3 pagination">
+                {{#if hasPrevious }}
+                <li><a class="item-pag" href="/explore?pg={{ sumar current -1}}"><span
+                            uk-pagination-previous></span></a></li>{{/if}}
 
-        <ul class="uk-pagination uk-visible@m" uk-margin uk-grid >
-                <div class="uk-width-1-3"></div>
-                <div class="uk-width-1-3 pagination">
-                    {{#if hasPrevious }}
-                    <li><a class="item-pag" href="/explore?pg={{ sumar current -1}}"><span uk-pagination-previous></span></a></li>{{/if}}
-    
-                    {{#if hasPrevNext }}
-                    {{#each paginas}}
-                    <li class="{{ clase }}">
-                        <a class="item-pag" href="/explore?pg={{ valor }}">{{ valor }}</a>
-                    </li>
-    
-                    {{/each}}
-                    {{/if}}
-    
-                    {{#if hasNext }}
-                    <li ><a class="item-pag" href="/explore?pg={{ sumar current 1}}"><span uk-pagination-next></span></a></li>
-                    {{/if}}
-                </div>
-                <div class="uk-width-1-3 resume-pag">{{ current }} - {{ multiplicar current 2 }} de {{ totalForms }}</div>
-            </ul>
-            <ul class="uk-pagination uk-hidden@m" uk-margin uk-grid >
-                <div class="uk-width-1-3"></div>
-                <div class="uk-width-1-3 pagination small-pagination">
-                    {{#if hasPrevious }}
-                    <li><a class="item-pag small-pag" href="/explore?pg={{ sumar current -1}}"><span uk-pagination-previous uk-icon="icon: pagination-previous; ratio: 2"></span></a></li>{{/if}}
-                    
-                    {{#if hasNext }}
-                    <li ><a class="item-pag-s small-pag" href="/explore?pg={{ sumar current 1}}"><span uk-pagination-next></span></a></li>
-                    {{/if}}
-                </div>
-                {{#if hasNext }}
-                <div class="uk-width-1-3 resume-pag">{{ current }} - {{ multiplicar current 2 }} de {{ totalForms }}</div>
-                {{else}}
-                <div class="uk-width-1-3 resume-pag">{{ current }} - {{ totalForms }} de {{ totalForms }}</div>
+                {{#if hasPrevNext }}
+                {{#each paginas}}
+                <li class="{{ clase }}">
+                    <a class="item-pag" href="/explore?pg={{ valor }}">{{ valor }}</a>
+                </li>
+
+                {{/each}}
                 {{/if}}
-            </ul>
+
+                {{#if hasNext }}
+                <li><a class="item-pag" href="/explore?pg={{ sumar current 1}}"><span uk-pagination-next></span></a>
+                </li>
+                {{/if}}
+            </div>
+            <div class="uk-width-1-3 resume-pag">{{ current }} - {{ multiplicar current 2 }} de {{ totalForms }}</div>
+        </ul>
+        <ul class="uk-pagination uk-hidden@m" uk-margin uk-grid>
+            <div class="uk-width-1-3"></div>
+            <div class="uk-width-1-3 pagination small-pagination">
+                {{#if hasPrevious }}
+                <li><a class="item-pag small-pag" href="/explore?pg={{ sumar current -1}}"><span uk-pagination-previous
+                            uk-icon="icon: pagination-previous; ratio: 2"></span></a></li>{{/if}}
+
+                {{#if hasNext }}
+                <li><a class="item-pag-s small-pag" href="/explore?pg={{ sumar current 1}}"><span
+                            uk-pagination-next></span></a></li>
+                {{/if}}
+            </div>
+            {{#if hasNext }}
+            <div class="uk-width-1-3 resume-pag">{{ current }} - {{ multiplicar current 2 }} de {{ totalForms }}</div>
+            {{else}}
+            <div class="uk-width-1-3 resume-pag">{{ current }} - {{ totalForms }} de {{ totalForms }}</div>
+            {{/if}}
+        </ul>
+        {{/empty}}
 
     </div>
 </section>

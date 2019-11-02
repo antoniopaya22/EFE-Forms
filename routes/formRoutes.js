@@ -507,11 +507,15 @@ module.exports = {
                         if (e.descripcion.length > 80) {
                             e.descripcion = e.descripcion.substring(0, 80) + "...";;
                         }
-                    });
+                    }); 
+                    var user = undefined;
+                    if(req.state["session-id"].user){
+                        user = req.state["session-id"].user;
+                    }
                     return h.view('forms/explore',
                         {
                             forms: formsEjemplo,
-                            usuarioAutenticado: req.state["session-id"].user,
+                            usuarioAutenticado: user,
                             paginas: paginas,
                             current: pg,
                             hasPrevious: previous,

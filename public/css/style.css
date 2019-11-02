@@ -180,14 +180,16 @@
 .ck-required{
     margin-top: 14px;
 }
-#addPregunta{
-    margin-top: 0;
-}
+
 .big-nav-bar{
     position: sticky;
     top: 0;
     background-color: white;
     z-index: 99;
+}
+
+.div-bts-add-del{
+    margin-left: 0 !important;
 }
 @media (max-width: 640px) {
     .ck-required{
@@ -202,4 +204,23 @@
         margin-left: 30px;
         width: 100%;
     }
+    .uk-padding-remove-left-efe { 
+        padding-left: 0px !important; 
+    }
+}
+@media (min-width: 640px) {
+    .form-div{
+        padding-left: 0 !important;
+    }
+    #addPregunta{
+        margin-top: 0;
+        margin-right: 5%;
+        width: 45%;
+    }
+    #removePreguntas{
+        margin-top: 0;
+        margin-left: 5%;
+        width: 45%;
+    }
+    
 }

@@ -2,7 +2,7 @@
 </section>
 <div uk-grid>
     <div class="efe-form-card uk-width-1-4 uk-visible@m"></div>
-    <div class="uk-card uk-card-default uk-card-body@m uk-width-1-2@m uk-width-1-1@s">
+    <div class="uk-card uk-card-default uk-card-body@m uk-width-1-2@m uk-width-1-1@s form-div">
         <form class="form-small@s uk-padding-small" method="post" action="/addForm">
             <fieldset class="uk-fieldset efe-form">
 
@@ -77,11 +77,19 @@
                     <hr class="uk-divider-icon">
                 </fieldset>
             </div>
-            <button class="uk-button uk-border-rounded uk-button-primary uk-align-center" id="addPregunta"
-                type="button">
-                <span data-uk-icon="plus-circle" class="uk-margin-small-right"> </span>
-                Añadir pregunta
-            </button>
+            <div class="div-bts-add-del" uk-grid>
+                <button class="uk-button uk-border-rounded uk-button-primary uk-width-1-2@s uk-grid-margin" id="addPregunta"
+                    type="button">
+                    <span data-uk-icon="plus-circle" class="uk-margin-small-right"> </span>
+                    Añadir pregunta
+                </button>
+                <button class="uk-button uk-border-rounded uk-width-1-2@s uk-grid-margin" id="removePreguntas"
+                    type="button">
+                    <span data-uk-icon="minus-circle" class="uk-margin-small-right"> </span>
+                    Borrar todas las preguntas
+                </button>
+            </div>
+
             <hr class="uk-divider-icon">
             <button class="uk-button uk-button-efe uk-border-rounded uk-align-center" type="submit">
                 <span data-uk-icon="pencil" class="uk-margin-small-right"> </span>
@@ -97,6 +105,7 @@
 <script type="application/javascript">
     var numP = 1;
     document.getElementById('addPregunta').addEventListener('click', addPregunta);
+    document.getElementById('removePreguntas').addEventListener('click', removeAllPreguntas);
     function addPregunta() {
         numP++;
         const pregunta = document.createElement('fieldset');
@@ -137,5 +146,12 @@
     function removePregunta(num) {
         numP--;
         document.getElementById(`pregunta${num}`).remove();
+    }
+    function removeAllPreguntas() {
+        var preguntas = numP;
+        for (var i = 1; i <= preguntas; i++) {
+            removePregunta(i);
+        }
+        addPregunta();
     }
 </script>
