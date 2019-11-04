@@ -134,7 +134,9 @@ module.exports = {
                         });
                     user = undefined;
                     if (req.state["session-id"]) {
-                        user = req.state["session-id"].user;
+                        if (req.state["session-id"].user) {
+                            user = req.state["session-id"].user;
+                        }
                     }
                     if (formEdit.publico || (!formEdit.publico && user)) {
                         return h.view('forms/addRespuesta',
@@ -162,7 +164,9 @@ module.exports = {
                     };
                     user = undefined;
                     if (req.state["session-id"]) {
-                        user = req.state["session-id"].user;
+                        if (req.state["session-id"].user) {
+                            user = req.state["session-id"].user;
+                        }
                     }
                     respuesta = "";
                     await repositorioForm.conexion()
@@ -189,7 +193,9 @@ module.exports = {
                 handler: async (req, h) => {
                     user = undefined;
                     if (req.state["session-id"]) {
-                        user = req.state["session-id"].user;
+                        if (req.state["session-id"].user) {
+                            user = req.state["session-id"].user;
+                        }
                     }
                     return h.view('forms/addForm', {
                         usuarioAutenticado: user
@@ -393,7 +399,9 @@ module.exports = {
                     formEdit.tags = tags;
                     user = {};
                     if (req.state["session-id"]) {
-                        user = req.state["session-id"].user;
+                        if (req.state["session-id"].user) {
+                            user = req.state["session-id"].user;
+                        }
                     }
                     return h.view('forms/editForm',
                         { form: formEdit, usuarioAutenticado: user },
@@ -522,8 +530,10 @@ module.exports = {
                         }
                     }); 
                     var user = undefined;
-                    if(req.state["session-id"].user){
-                        user = req.state["session-id"].user;
+                    if (req.state["session-id"]) {
+                        if (req.state["session-id"].user) {
+                            user = req.state["session-id"].user;
+                        }
                     }
                     return h.view('forms/explore',
                         {
