@@ -31,7 +31,7 @@
         "handlebars": "^4.4.5",
         "hapi-error": "^2.1.0",
         "mongo": "^0.1.0",
-        "mongodb": "^2.2.33",
+        "mongodb": "^3.1.13",
         "nodemon": "^1.19.4"
     }
 }
